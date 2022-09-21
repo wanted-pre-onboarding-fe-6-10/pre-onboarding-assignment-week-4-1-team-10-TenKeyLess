@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const BASEURL = process.env.REACT_APP_BASE_URL;
 
@@ -26,6 +27,9 @@ instance.interceptors.request.use(
 // 응답 인터셉터 추가하기
 instance.interceptors.response.use(
   response => {
+    //  console.log(response); // {data: {…}, status: 200, statusText: 'OK', headers: {…}, config: {…}, …}
+    // const navigate = useNavigate();
+    // navigate('/accountList');
     return response;
   },
   error => {

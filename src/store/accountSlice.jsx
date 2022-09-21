@@ -13,17 +13,18 @@ export const getAccountsRequest = createAsyncThunk('GET_COMMENT', async (_, thun
 // <store>
 export const accountSlice = createSlice({
   name: 'accounts',
-  initialState: [],
+  initialState: { accounts: [] },
 
   reducers: {},
 
   extraReducers: builder => {
     // 3. reducer로 acrion캐치함
     builder.addCase(getAccountsRequest.fulfilled, (state, action) => {
-      console.log('action', action);
-      return {
-        ...state,
-      };
+      // console.log(action.payload);
+      console.log('state', state);
+      return { accounts: action.payload };
     });
   },
 });
+
+export default accountSlice.reducer;

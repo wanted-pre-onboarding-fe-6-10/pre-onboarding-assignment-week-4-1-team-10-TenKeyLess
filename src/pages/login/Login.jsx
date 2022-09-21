@@ -1,10 +1,13 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { loginRequest, accountsRequest } from '../../api/axios';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { accountSlice } from '../../store/accountSlice';
+import { postLoginRequest } from '../../store/userSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -12,22 +15,14 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = data => {
-    loginRequest({
-      email: data.email,
-      password: data.password,
-    }).then(res => {
-      if (res.status === 200) {
-        localStorage.setItem('accessToken', res.data.accessToken);
+    const loginData = { email: data.email, password: data.password };
+    dispatch(postLoginRequest(loginData)).then(result => {
+      if (result.error) {
+        return;
       }
+      navigate('/accounts');
     });
   };
-
-  useEffect(() => {
-    accountsRequest().then(res => {
-      console.log(res);
-    });
-  }, []);
-
   return (
     <div className="bg-mainColor w-full h-screen flex flex-col items-center">
       <h1 className="text-4xl mt-32 mb-10">December &amp; Company</h1>

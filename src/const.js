@@ -1,8 +1,8 @@
 export const SIDER = [
-  { id: 1, name: '대시보드', keyword: 'dashbaord' },
-  { id: 2, name: '계좌 목록', keyword: 'accounts' },
-  { id: 3, name: '사용자 목록', keyword: 'users' },
-  { id: 9999, name: '로그아웃', keyword: 'logout' },
+  { id: 1, name: '대시보드', keyword: 'dashbaord', url: 'dashbaord' },
+  { id: 2, name: '계좌 목록', keyword: 'accounts', url: 'accounts' },
+  { id: 3, name: '사용자 목록', keyword: 'users', url: 'users' },
+  { id: 9999, name: '로그아웃', keyword: 'logout', url: '/' },
 ];
 
 export const BROKERS = {

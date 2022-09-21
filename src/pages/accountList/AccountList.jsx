@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAccountsRequest } from '../../store/accountSlice';
 
 const AccountList = () => {
-  return <div>AccountList</div>;
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getAccountsRequest());
+  // }, []);
+
+  return <div>AccountList 내용</div>;
 };
 
 export default AccountList;
