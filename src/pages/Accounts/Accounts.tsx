@@ -24,12 +24,13 @@ const Accounts = () => {
   const accessToken = useRecoilValue(tokenAtom);
   const [accounts, setAccounts] = useRecoilState(AccountListAtom);
   const [accountList, setAccountList] = useState([]);
-  const [getAccounts, { data, loading }] = useMutation<any>(
-    `${process.env.REACT_APP_BASE_URL}/accounts`,
-    accessToken
-  );
+  const [getAccounts, { data, loading }] = useMutation<any>(`/accounts`);
+  const removeList = () => {
+    setAccounts([]);
+  };
   useEffect(() => {
-    if (accessToken && !accounts) {
+    if (accounts.length !== 0) return;
+    if (loading && accessToken) {
       getAccounts();
     }
   }, []);
@@ -40,16 +41,35 @@ const Accounts = () => {
     }
   }, [data]);
   // console.log(list);
-  // console.log(accessToken);
+  console.log(accessToken);
   console.log(accounts);
   return (
     <div>
+      <button onClick={removeList}>remove</button>
       {loading ? (
-        <div>Loading</div>
+        accounts.length !== 0 ? (
+          <div>
+            {accounts.map((account: Account, index: number) => (
+              <div key={index}>
+                <div>{account.uuid}</div>
+                <div>{account.name}</div>
+                <div>{account.assets}</div>
+                <div>{account.payments}</div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>Loading</div>
+        )
       ) : (
         <div>
           {accounts.map((account: Account, index: number) => (
-            <div key={index}>{account.name}</div>
+            <div key={index}>
+              <div>{account.uuid}</div>
+              <div>{account.name}</div>
+              <div>{account.assets}</div>
+              <div>{account.payments}</div>
+            </div>
           ))}
         </div>
       )}

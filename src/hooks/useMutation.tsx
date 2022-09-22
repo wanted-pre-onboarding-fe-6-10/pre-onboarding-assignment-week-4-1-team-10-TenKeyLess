@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from './../atoms';
 
 interface UseMutationState<T> {
   loading: boolean;
@@ -8,9 +10,10 @@ interface UseMutationState<T> {
 }
 type UseMutationResult<T> = [(data?: any) => void, UseMutationState<T>];
 
-function useMutation<T = any>(url: string, accessToken?: string): UseMutationResult<T> {
+function useMutation<T = any>(url: string): UseMutationResult<T> {
+  const accessToken = useRecoilValue(tokenAtom);
   const [state, setState] = useState<UseMutationState<T>>({
-    loading: false,
+    loading: true,
     data: undefined,
     error: undefined,
     accessToken,
@@ -18,7 +21,7 @@ function useMutation<T = any>(url: string, accessToken?: string): UseMutationRes
 
   function mutation(data?: any) {
     setState(prev => ({ ...prev, loading: true }));
-    fetch(url, {
+    fetch(`${process.env.REACT_APP_BASE_URL}` + url, {
       method: `${data ? 'POST' : 'GET'}`,
       headers: {
         'Content-Type': 'application/json',
