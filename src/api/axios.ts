@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { config } from 'process';
-import { GetToken } from 'src/repository/TokenRepository';
+import { GetToken } from '../repository/TokenRepository';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
