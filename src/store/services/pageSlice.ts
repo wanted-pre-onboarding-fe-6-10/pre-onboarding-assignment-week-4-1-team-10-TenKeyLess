@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Params } from 'src/types/types';
 import { getAccountService } from '../../api/AccountService';
-
-export interface InitialParams {
-  _page: string;
-  _limit: '10' | '20' | '30';
-  _sort: string | null;
-  _order: 'desc' | 'asc' | null;
-}
 
 export const getFullAccountList = createAsyncThunk(
   'page/accounts',
@@ -19,11 +13,12 @@ export const getFullAccountList = createAsyncThunk(
   }
 );
 
-const initialParams: InitialParams = {
+const initialParams: Params = {
   _page: '1',
   _limit: '10',
   _sort: null,
   _order: null,
+  q: null,
 };
 
 const pageSlice = createSlice({

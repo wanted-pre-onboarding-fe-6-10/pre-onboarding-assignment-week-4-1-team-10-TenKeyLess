@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAccountService } from '../../api/AccountService';
-import { Account } from 'src/types/types';
+import { Account, Params } from 'src/types/types';
 import { AxiosError } from 'axios';
 import { RemoveToken } from '../../repository/TokenRepository';
-import { InitialParams } from './pageSlice';
 
 const initialState: Account[] | 'jwt expired' | null = [];
 
 export const getAccountList = createAsyncThunk(
   'accounts/getList',
-  async (params: InitialParams, { rejectWithValue }) => {
+  async (params: Params, { rejectWithValue }) => {
     try {
       const { data } = await getAccountService(params);
       return data;

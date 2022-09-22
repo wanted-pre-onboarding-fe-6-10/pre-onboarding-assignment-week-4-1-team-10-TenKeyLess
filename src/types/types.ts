@@ -17,3 +17,28 @@ export interface Account {
   created_at: string;
   updated_at: string;
 }
+
+export interface Params {
+  _page: string;
+  _limit: '10' | '20' | '30';
+  _sort: string | null;
+  _order: 'desc' | 'asc' | null;
+  q: string | null;
+}
+
+export interface User {
+  id: number;
+  uuid: string;
+  photo: string;
+  name: string;
+  email: string;
+  age: number;
+  gender_origin: number;
+  birth_date: string;
+  phone_number: string;
+  address: string;
+  detail_address: string;
+  last_login: string;
+  created_at: string;
+  updated_at: string;
+}
