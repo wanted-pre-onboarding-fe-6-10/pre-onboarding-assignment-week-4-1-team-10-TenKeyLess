@@ -5,9 +5,9 @@ import { getAccountsRequest } from '../../store/accountSlice';
 const AccountList = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAccountsRequest());
-  // }, []);
+  useEffect(() => {
+    dispatch(getAccountsRequest());
+  }, []);
 
   return <div>AccountList 내용</div>;
 };

@@ -12,8 +12,8 @@ const AppRouter = () => {
   return (
     <div>
       <Header>
-        {/* <Sidebar />
-      <Footer /> */}
+        <Sidebar />
+        <Footer />
         <Routes>
           <Route path="/accounts" element={<AccountList />} />
           <Route path="/accountDetail/:id" element={<AccountDetail />} />

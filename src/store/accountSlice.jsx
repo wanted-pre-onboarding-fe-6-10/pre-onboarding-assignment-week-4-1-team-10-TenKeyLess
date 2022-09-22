@@ -3,7 +3,7 @@ import { accountsRequest } from '../api/axios';
 
 export const getAccountsRequest = createAsyncThunk('GET_COMMENT', async (_, thunkApi) => {
   try {
-    const { data } = await accountsRequest(); // 2. api 사용, 비동기 코드 만들고
+    const { data } = await accountsRequest(); // 2. store 밖에서 비동기 코드 만들고
     return data;
   } catch {
     return thunkApi.rejectWithValue('err');
@@ -18,10 +18,9 @@ export const accountSlice = createSlice({
   reducers: {},
 
   extraReducers: builder => {
-    // 3. reducer로 acrion캐치함
+    // 3. reducer로 action캐치함
     builder.addCase(getAccountsRequest.fulfilled, (state, action) => {
       // console.log(action.payload);
-      console.log('state', state);
       return { accounts: action.payload };
     });
   },

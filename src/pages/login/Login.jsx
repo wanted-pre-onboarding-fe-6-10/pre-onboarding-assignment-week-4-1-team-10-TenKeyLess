@@ -23,6 +23,7 @@ const Login = () => {
       navigate('/accounts');
     });
   };
+
   return (
     <div className="bg-mainColor w-full h-screen flex flex-col items-center">
       <h1 className="text-4xl mt-32 mb-10">December &amp; Company</h1>

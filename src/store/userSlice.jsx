@@ -26,7 +26,6 @@ export const userSlice = createSlice({
     // 3. reducer로 acrion캐치함
     builder.addCase(postLoginRequest.fulfilled, (state, action) => {
       // console.log('action', action);
-      console.log(state);
       return { userId: action.payload };
     });
   },
