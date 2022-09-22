@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/header/Header';
+import HeaderApp from './components/header/Header';
 import Sidebar from './components/sidebar/Sidebar';
 import Footer from './components/footer/Footer';
 import AccountList from './pages/accountList/AccountList';
@@ -11,8 +11,8 @@ import UserDetail from './pages/userDetail/UserDetail';
 const AppRouter = () => {
   return (
     <div>
-      <Header>
-        <Sidebar />
+      <HeaderApp>
+        {/* <Sidebar /> */}
         <Footer />
         <Routes>
           <Route path="/accounts" element={<AccountList />} />
@@ -20,7 +20,7 @@ const AppRouter = () => {
           <Route path="/users" element={<UserList />} />
           <Route path="/userDetail/:id" element={<UserDetail />} />
         </Routes>
-      </Header>
+      </HeaderApp>
     </div>
   );
 };

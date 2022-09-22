@@ -1,8 +1,34 @@
+import { DashboardOutlined, FileOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+
 export const SIDER = [
-  { id: 1, name: '대시보드', keyword: 'dashbaord', url: 'dashbaord' },
-  { id: 2, name: '계좌 목록', keyword: 'accounts', url: 'accounts' },
-  { id: 3, name: '사용자 목록', keyword: 'users', url: 'users' },
-  { id: 9999, name: '로그아웃', keyword: 'logout', url: '/' },
+  {
+    id: 1,
+    name: '대시보드',
+    keyword: 'dashbaord',
+    url: 'dashbaord',
+    icon: <DashboardOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
+  },
+  {
+    id: 2,
+    name: '계좌 목록',
+    keyword: 'accounts',
+    url: 'accounts',
+    icon: <FileOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
+  },
+  {
+    id: 3,
+    name: '사용자 목록',
+    keyword: 'users',
+    url: 'users',
+    icon: <UserOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
+  },
+  {
+    id: 9999,
+    name: '로그아웃',
+    keyword: 'logout',
+    url: '/',
+    icon: <LogoutOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
+  },
 ];
 
 export const BROKERS = {

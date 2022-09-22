@@ -18,15 +18,15 @@ export const postLoginRequest = createAsyncThunk('POST_LOGIN', async (userData, 
 
 // <store>
 export const userSlice = createSlice({
-  name: 'userId',
-  initialState: { userId: 0 },
+  name: 'userName',
+  initialState: { userName: 0 },
   reducers: {},
 
   extraReducers: builder => {
     // 3. reducer로 acrion캐치함
     builder.addCase(postLoginRequest.fulfilled, (state, action) => {
       // console.log('action', action);
-      return { userId: action.payload };
+      return { userName: action.payload };
     });
   },
 });
