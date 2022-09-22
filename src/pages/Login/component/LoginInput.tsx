@@ -32,7 +32,7 @@ const LoginInput = () => {
   return (
     <form>
       <label>
-        email
+        email1
         <input type="email" name="email" onChange={handleInputChange} />
       </label>
       <label>
