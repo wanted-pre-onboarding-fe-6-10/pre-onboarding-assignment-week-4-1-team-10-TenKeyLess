@@ -29,7 +29,7 @@ export const store = configureStore({
 store형태
 {
   userId: {userId : 104} ,
-  accounts : { accounts : [{},{},{}...] }
-  userDetails : {userDetails : [{},{},{}...]}
+  accounts : { accounts : [{},{},{}...], totalCount : 200 } // 페이지네이션 대상 10개씩 저장
+  userDetails : {userDetails : [{},{},{}...]} // 페이지네이션 대상 10개씩 저장
 }
 */

@@ -6,3 +6,7 @@ body {
   margin: 0;
   font-family: titillium-web, sans-serif;
 }
+
+button {
+  cursor: pointer;
+}

@@ -72,7 +72,7 @@ const HeaderLayout = ({ children }) => {
         <Content className="bg-orange-200 m-4">
           <div>{children}</div>
         </Content>
-        <Footer className="fixed bottom-0 w-full py-4 text-center bg-gray-500">
+        <Footer className="w-full fixed bottom-0 py-4 pl-0 pr-14 flex justify-center bg-gray-500">
           Copyright © December and Company Inc.
         </Footer>
       </Layout>

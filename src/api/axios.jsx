@@ -42,9 +42,11 @@ export const loginRequest = userData => {
   return instance.post('/login', userData);
 };
 
-// 1. api 메서드 만들고
-export const accountsRequest = () => {
-  return instance.get('/accounts');
+// 1. api 메서드 만들고 - 페이지네이션
+export const accountsRequest = pageNationData => {
+  return instance.get(
+    `/accounts?_expand=user&_page=${pageNationData.currentPage}&_limit=${pageNationData.count}`
+  );
 };
 
 export const userDetailRequest = () => {
