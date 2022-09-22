@@ -1,5 +1,15 @@
+import PageButton from './components/PageButton';
+import UserBox from './components/UserBox';
+import UserTitle from './components/UserTitle';
+
 const UserList = () => {
-  return <div>user-list-page</div>;
+  return (
+    <>
+      <UserTitle />
+      <UserBox />
+      <PageButton />
+    </>
+  );
 };
 
 export default UserList;
