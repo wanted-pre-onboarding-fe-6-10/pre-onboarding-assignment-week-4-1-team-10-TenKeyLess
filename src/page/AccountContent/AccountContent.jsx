@@ -1,15 +1,15 @@
 import React from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
+import Sider from '../../components/Sider/Sider';
 import AccountList from './AccountLIst/AccountList';
-import AccountSider from './AccountSider/AccountSider';
 
 const AccountContent = () => {
   return (
     <>
       <Header />
-      <div className="w-[1440px] flex p-10 justify-center">
-        <AccountSider />
+      <div className="w-[1440px] flex  p-10 my-0 mx-auto">
+        <Sider />
         <AccountList />
       </div>
       <Footer />

@@ -1,25 +1,23 @@
 import React from 'react';
-import { Table } from 'antd';
-import 'antd/dist/antd.css';
 import { useAccountHook } from '../../../hoc/useAccountHook';
-
-const { Column } = Table;
+import AccountItem from '../AccountItem/AccountItem';
 
 const AccountList = () => {
   const { account } = useAccountHook();
   return (
-    <div className="border flex-1">
-      <Table dataSource={account}>
-        <Column title="고객명" dataIndex="id" key="id" />
-        <Column title="브로커명" dataIndex="broker_id" key="broker_id" />
-        <Column title="계좌번호" dataIndex="number" key="number" />
-        <Column title="계좌상태" dataIndex="status" key="status" />
-        <Column title="계좌명" dataIndex="name" key="name" />
-        <Column title="평가금액" dataIndex="assets" key="assets" />
-        <Column title="입금금액" dataIndex="payments" key="payments" />
-        <Column title="활성화 여부" dataIndex="is_active" key="is_active" />
-        <Column title="개설일" dataIndex="created_at" key="created_at" />
-      </Table>
+    <div className="border flex-1 w-full">
+      <div className="w-full flex p-4 bg-gray-100">
+        <div className="w-1/10">고객명</div>
+        <div className="w-1/10">브로커명</div>
+        <div className="w-1/10">계좌번호</div>
+        <div className="w-1/10">계좌상태</div>
+        <div className="w-1/10">계좌명</div>
+        <div className="w-1/10">평가금액</div>
+        <div className="w-1/10">입금금액</div>
+        <div className="w-1/10">활성화 여부</div>
+        <div className="w-1/10">개설일</div>
+      </div>
+      {account && account.map((acc, index) => <AccountItem key={index} account={acc} />)}
     </div>
   );
 };
