@@ -10,12 +10,24 @@ const axiosConfig: AxiosRequestConfig = {
   },
 };
 
-export const instance: AxiosInstance = axios.create(axiosConfig);
+const instance: AxiosInstance = axios.create(axiosConfig);
 
-instance.interceptors.request.use(config => {
-  const token = GetToken();
-  if (token) {
-    config.headers!.Authorization = `Bearer ${token}`;
+instance.interceptors.request.use(
+  config => {
+    const token = GetToken();
+    if (token) {
+      config.headers!.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
+
+instance.interceptors.response.use(
+  response => response,
+  error => Promise.resolve(error.response)
+);
+
+export default instance;
