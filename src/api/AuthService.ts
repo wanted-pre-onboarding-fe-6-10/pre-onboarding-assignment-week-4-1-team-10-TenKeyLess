@@ -1,4 +1,4 @@
-import { LoginInput } from 'src/types/authTypes';
+import { LoginInput } from 'src/types/types';
 import instance from './axios';
 
 const authService = async (value: LoginInput) => {

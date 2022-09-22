@@ -1,5 +1,7 @@
+import AccountBox from './components/AccountBox';
+
 const AccountList = () => {
-  return <div>account-list-page</div>;
+  return <AccountBox />;
 };
 
 export default AccountList;

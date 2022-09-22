@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import authService from '../../api/AuthService';
 import { SetToken } from '../../repository/TokenRepository';
-import { LoginInput } from '../../types/authTypes';
+import { LoginInput } from '../../types/types';
 
 export const initialInput: LoginInput = {
   email: '',
@@ -25,6 +25,7 @@ export const loginRequest = createAsyncThunk(
       if (e instanceof AxiosError) {
         return rejectWithValue(e.response?.data);
       }
+      throw e;
     }
   }
 );
