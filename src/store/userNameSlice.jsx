@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginRequest } from '../api/axios';
 
+// acion함수
 export const postLoginRequest = createAsyncThunk('POST_LOGIN', async (userData, thunkApi) => {
   try {
     const { data } = await loginRequest(userData); // 2. api 사용, 비동기 코드 만들고
@@ -17,18 +18,18 @@ export const postLoginRequest = createAsyncThunk('POST_LOGIN', async (userData, 
 });
 
 // <store>
-export const userSlice = createSlice({
+export const userNameSlice = createSlice({
   name: 'userName',
-  initialState: { userName: 0 },
+  initialState: { userName: '' },
   reducers: {},
 
   extraReducers: builder => {
     // 3. reducer로 acrion캐치함
     builder.addCase(postLoginRequest.fulfilled, (state, action) => {
       // console.log('action', action);
-      return { userName: action.payload };
+      return { ...state, userName: action.payload };
     });
   },
 });
 
-export default userSlice.reducer;
+export default userNameSlice.reducer;

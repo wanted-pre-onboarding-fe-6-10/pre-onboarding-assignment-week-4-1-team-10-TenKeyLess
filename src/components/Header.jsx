@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout } from 'antd';
-import { SIDER } from '../../const';
+import { SIDER } from '../const';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const HeaderApp = ({ children }) => {
+const HeaderLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
   const userName = useSelector(state => state.userName.userName);
@@ -16,14 +16,14 @@ const HeaderApp = ({ children }) => {
     <Layout className="min-h-screen">
       <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
         <ul
-          class="ant-menu ant-menu-root ant-menu-inline ant-menu-dark"
+          className="ant-menu ant-menu-root ant-menu-inline ant-menu-dark"
           role="menu"
-          tabindex="0"
+          tabIndex="0"
           data-menu-list="true"
         >
           <li style={{ marginTop: '20px' }} className="ant-menu-item pl-6">
             <button type="button" className="ant-menu-title-content text-3xl my-6">
-              Perface
+              Preface
             </button>
           </li>
 
@@ -57,8 +57,9 @@ const HeaderApp = ({ children }) => {
       </Sider>
 
       <Layout className="site-layout">
-        <Header className="header h-1/8 bg-slate-400 flex justify-between pr-10">
+        <Header className="header h-1/8 bg-gray-500 flex justify-between pr-10">
           <Breadcrumb className="my-5 text-yellow-300">
+            {/* [TODO] - 헤더에 주소경로 출력해주기 */}
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item className="text-yellow-300">App</Breadcrumb.Item>
@@ -71,10 +72,12 @@ const HeaderApp = ({ children }) => {
         <Content className="bg-orange-200 m-4">
           <div>{children}</div>
         </Content>
-        <Footer className="text-center bg-slate-300">Copyright © December and Company Inc.</Footer>
+        <Footer className="fixed bottom-0 w-full py-4 text-center bg-gray-500">
+          Copyright © December and Company Inc.
+        </Footer>
       </Layout>
     </Layout>
   );
 };
 
-export default HeaderApp;
+export default HeaderLayout;

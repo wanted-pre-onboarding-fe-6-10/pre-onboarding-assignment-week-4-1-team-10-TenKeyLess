@@ -1,27 +1,24 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HeaderApp from './components/header/Header';
-import Sidebar from './components/sidebar/Sidebar';
-import Footer from './components/footer/Footer';
+import HeaderLayout from './components/Header';
 import AccountList from './pages/accountList/AccountList';
 import AccountDetail from './pages/accountDetail/AccountDetail';
 import UserList from './pages/userList/userList';
 import UserDetail from './pages/userDetail/UserDetail';
+import Auth from './components/Auth';
 
 const AppRouter = () => {
   return (
-    <div>
-      <HeaderApp>
-        {/* <Sidebar /> */}
-        <Footer />
+    <Auth>
+      <HeaderLayout>
         <Routes>
           <Route path="/accounts" element={<AccountList />} />
           <Route path="/accountDetail/:id" element={<AccountDetail />} />
           <Route path="/users" element={<UserList />} />
           <Route path="/userDetail/:id" element={<UserDetail />} />
         </Routes>
-      </HeaderApp>
-    </div>
+      </HeaderLayout>
+    </Auth>
   );
 };
 

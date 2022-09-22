@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { accountsRequest } from '../api/axios';
 
-export const getAccountsRequest = createAsyncThunk('GET_COMMENT', async (_, thunkApi) => {
+export const getAccountsRequest = createAsyncThunk('GET_ACCOUNTS', async (_, thunkApi) => {
   try {
     const { data } = await accountsRequest(); // 2. store 밖에서 비동기 코드 만들고
     return data;
@@ -21,7 +21,7 @@ export const accountSlice = createSlice({
     // 3. reducer로 action캐치함
     builder.addCase(getAccountsRequest.fulfilled, (state, action) => {
       // console.log(action.payload);
-      return { accounts: action.payload };
+      return { ...state, accounts: action.payload }; // [질문] 반환되는 값이 state전체인지? 아님 account state만 인지?
     });
   },
 });

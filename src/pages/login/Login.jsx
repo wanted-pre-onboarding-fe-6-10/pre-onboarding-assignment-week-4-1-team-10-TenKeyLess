@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { postLoginRequest } from '../../store/userSlice';
+import { postLoginRequest } from '../../store/userNameSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

@@ -47,9 +47,9 @@ export const accountsRequest = () => {
   return instance.get('/accounts');
 };
 
-// export const usersRequest = () => {
-//   //
-// };
+export const userDetailRequest = () => {
+  return instance.get('/users');
+};
 
 // export const userSettingRequest = () => {
 //   //

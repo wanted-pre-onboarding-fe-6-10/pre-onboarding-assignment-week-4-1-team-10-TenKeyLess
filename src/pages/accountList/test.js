@@ -6,6 +6,7 @@ import { getUserDetailRequest } from '../../store/userDetailSlice';
 import 'antd/dist/antd.css';
 import { Table } from 'antd';
 
+// [TODO] 데이터 이런식으로 만들어야 함. - accounts, users 사용
 const DATA = [
   {
     id: '1',
@@ -495,8 +496,8 @@ const dataArr = [];
 
 for (let i = 0; i < DATA.length; i += 1) {
   dataArr.push({
-    key: i,
-    id: i,
+    key: DATA[i].id,
+    id: DATA[i].id,
     broker: DATA[i].broker,
     userName: DATA[i].userName,
     acountName: DATA[i].acountName,
@@ -513,8 +514,6 @@ const AccountList = () => {
   const dispatch = useDispatch();
   const { accounts } = useSelector(state => state.accounts);
   const { userDetails } = useSelector(state => state.userDetails);
-  // console.log('accounts', accounts);
-  // console.log('userDetails', userDetails);
 
   useEffect(() => {
     dispatch(getAccountsRequest());
@@ -523,8 +522,7 @@ const AccountList = () => {
 
   return (
     <div>
-      <div className="h-24 mb-10 border-zinc-900 border-2">filter</div>
-      <Table className="" columns={columns} dataSource={dataArr} />;
+      <Table columns={columns} dataSource={dataArr} />;
     </div>
   );
 };
