@@ -10,9 +10,8 @@ const initialState: Account[] | 'jwt expired' | null = [];
 export const getAccountList = createAsyncThunk(
   'accounts/getList',
   async (params: InitialParams, { rejectWithValue }) => {
-    const { page, limit, sort, order } = params;
     try {
-      const { data } = await getAccountService(page, limit, sort, order);
+      const { data } = await getAccountService(params);
       return data;
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -25,16 +24,8 @@ export const getAccountList = createAsyncThunk(
 
 const accountSlice = createSlice({
   name: 'accounts',
-  initialState: { isLoading: false, list: initialState, pageList: [''] },
-  reducers: {
-    getPageList: (state, action) => {
-      const pages = Array.from(
-        { length: Math.ceil(state.list.length / action.payload) },
-        (value, index) => (index + 1).toString()
-      );
-      state.pageList = pages;
-    },
-  },
+  initialState: { isLoading: false, list: initialState },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(getAccountList.pending, (state, action) => {
       return { ...state, isLoading: true };
@@ -52,5 +43,4 @@ const accountSlice = createSlice({
   },
 });
 
-export const { getPageList } = accountSlice.actions;
 export default accountSlice.reducer;
