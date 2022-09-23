@@ -10,20 +10,18 @@ import Footer from './components/footer/Footer';
 
 const Router = () => {
   return (
-    <>
-      <BrowserRouter>
-        <Header />
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/user" element={<UserList />} />
-          <Route path="/account" element={<AccountList />} />
-          <Route path="/user/:idx" element={<UserDetail />} />
-          <Route path="/account/:idx" element={<AccountDetail />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Header />
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/user" element={<UserList />} />
+        <Route path="/account" element={<AccountList />} />
+        <Route path="/user/:idx" element={<UserDetail />} />
+        <Route path="/account/:idx" element={<AccountDetail />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 };
 

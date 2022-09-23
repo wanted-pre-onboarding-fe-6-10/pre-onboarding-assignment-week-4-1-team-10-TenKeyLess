@@ -23,6 +23,9 @@ export interface Params {
   _limit: '10' | '20' | '30';
   _sort: string | null;
   _order: 'desc' | 'asc' | null;
+  broker_id: Brokers | null;
+  status: number | null;
+  is_active: boolean | null;
   q: string | null;
 }
 
@@ -42,3 +45,30 @@ export interface User {
   created_at: string;
   updated_at: string;
 }
+
+type Brokers =
+  | 209
+  | 218
+  | 230
+  | 238
+  | 240
+  | 243
+  | 247
+  | 262
+  | 261
+  | 263
+  | 264
+  | 266
+  | 265
+  | 267
+  | 268
+  | 269
+  | 270
+  | 279
+  | 280
+  | 288
+  | 287
+  | 290
+  | 291
+  | 292
+  | 271;
