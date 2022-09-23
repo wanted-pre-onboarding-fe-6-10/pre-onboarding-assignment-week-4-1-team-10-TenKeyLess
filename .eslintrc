@@ -1,15 +1,7 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": ["react-app", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
-  "plugins": ["@typescript-eslint", "prettier"],
-  "ignorePatterns": ["node_modules/"],
-  "env": {
-    "browser": true,
-    "node": true
-  },
+  "extends": ["react-app", "plugin:prettier/recommended"],
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "@typescript-eslint/no-var-requires": 0,
     "no-var": "warn", // var 금지
     "no-multiple-empty-lines": "warn", // 여러 줄 공백 금지
     "no-console": ["warn", { "allow": ["warn", "error"] }], // console.log() 금지
