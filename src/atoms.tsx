@@ -3,19 +3,17 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
-export const toggleThemeAtom = atom({
-  key: 'theme',
-  default: false,
-});
-
 export const toggleSidebarAtom = atom({
   key: 'sidebar',
   default: false,
 });
 
-export const tokenAtom = atom({
+export const userInfoAtom = atom({
   key: 'accessToken',
-  default: '',
+  default: {
+    accessToken: '',
+    email: '',
+  },
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -25,7 +23,7 @@ export const userListAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const AccountListAtom = atom({
+export const accountListAtom = atom({
   key: 'accountList',
   default: [],
   effects_UNSTABLE: [persistAtom],

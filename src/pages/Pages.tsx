@@ -1,14 +1,15 @@
+import Sidebar from 'components/sidebar/sidebar';
 import useMutation from 'hooks/useMutation';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import Swal from 'sweetalert2';
-import { tokenAtom } from './../atoms';
+import { userInfoAtom } from 'src/atoms';
 
 const Pages = () => {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useRecoilState(tokenAtom);
+  const [accessToken, setAccessToken] = useRecoilState(userInfoAtom);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,16 +31,17 @@ const Pages = () => {
 
   useEffect(() => {
     if (loginData) {
-      setAccessToken(loginData.accessToken!);
+      setAccessToken({ accessToken: loginData.accessToken!, email });
     }
   }, [loginData]);
 
-  console.log(signupData);
+  // console.log(signupData);
   console.log(loginData);
-  console.log(accessToken);
+  console.log(loginLoading);
+  // console.log(accessToken);
 
   return (
-    <div className="ml-16 mt-16">
+    <div className="ml-16 mt-16 flex">
       <h1>Pages</h1>
       <div>
         <input

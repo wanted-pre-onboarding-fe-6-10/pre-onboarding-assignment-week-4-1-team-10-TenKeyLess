@@ -1,5 +1,5 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { tokenAtom, userListAtom } from './../../atoms';
+import { userInfoAtom, userListAtom } from './../../atoms';
 import { useState, useEffect } from 'react';
 import useMutation from './../../hooks/useMutation';
 
@@ -21,7 +21,7 @@ interface User {
 }
 
 const Users = () => {
-  const accessToken = useRecoilValue(tokenAtom);
+  const accessToken = useRecoilValue(userInfoAtom);
   const [users, setUsers] = useRecoilState(userListAtom);
   const [userList, setUserList] = useState([]);
   const [getUsers, { data, loading }] = useMutation<any>(`/users`);
