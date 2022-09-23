@@ -7,30 +7,46 @@ import { AppDispatch } from '../../../store/';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { getFullAccountList } from '../../../store/services/pageSlice';
+import AccountTitle from './AccountTitle';
 
 const Account = () => {
   const nav = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
   const { list } = useSelector((state: ReducerType) => state.account);
   const { params } = useSelector((state: ReducerType) => state.page);
 
+  const toUserDetail = (id: number) => {
+    nav(`/user/${id}`);
+  };
+
   useEffect(() => {
-    const token = GetToken();
-    if (token) {
+    if (GetToken()) {
       dispatch(getAccountList(params));
       dispatch(getFullAccountList(parseInt(params._limit)));
-    } else {
-      nav('/');
     }
-  }, []);
+    if (!GetToken()) nav('/');
+  }, [params]);
 
   return (
-    <>
-      {list.map(account => {
-        return <li key={account.uuid}>{account.id}</li>;
+    <ul className="border-solid border-gray-500">
+      <AccountTitle />
+      {list.map((account, index) => {
+        return (
+          <li className="grid grid-cols-10 gap-4 text-center w-10/12" key={account.uuid}>
+            <div>{index + 1}</div>
+            <div onClick={() => toUserDetail(account.user_id)}>{account.user_id}</div>
+            <div>{account.broker_id}</div>
+            <div>{account.number}</div>
+            <div>{account.status}</div>
+            <div>{account.name}</div>
+            <div>{account.assets}</div>
+            <div>{account.payments}</div>
+            {account.is_active ? <div>활성화</div> : <div>비활성화</div>}
+            <div>{account.created_at}</div>
+          </li>
+        );
       })}
-    </>
+    </ul>
   );
 };
 
