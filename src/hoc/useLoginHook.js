@@ -29,7 +29,7 @@ export function useLoginHook() {
     const loginRes = await signIn(email, password);
     dispatch(setUser(loginRes.user.email));
     if (loginRes) {
-      window.location.replace('/account_list');
+      window.location.replace('/account_list/page=1/sort=user_id/filter=asc');
     }
     setCookie('myToken', loginRes.accessToken);
   };
