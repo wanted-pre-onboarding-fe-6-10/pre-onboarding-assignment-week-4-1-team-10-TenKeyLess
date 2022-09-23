@@ -16,14 +16,14 @@ const AccountList = () => {
   const dispatch = useDispatch();
   const { accounts, totalCount } = useSelector(state => state.accounts);
   // const { userDetails } = useSelector(state => state.userDetails);
-
   // console.log('userDetails', userDetails);
+  console.log(accounts);
 
   const [current, setCurrent] = useState(1);
 
   useEffect(() => {
-    dispatch(getFullAccountRequest({ currentPage: '', count: '' }));
-    dispatch(getAccountsRequest({ currentPage: current, count: COUNT_PER_PAGE })); // 1페이지에 10개씩
+    dispatch(getFullAccountRequest({ currentPage: '', count: '' })); // 전체 get
+    dispatch(getAccountsRequest({ currentPage: current, count: COUNT_PER_PAGE })); // 1페이지에 10개씩 get
     dispatch(getUserDetailRequest());
     navigate(`/accounts/${current}`);
   }, [current, dispatch, navigate]);
