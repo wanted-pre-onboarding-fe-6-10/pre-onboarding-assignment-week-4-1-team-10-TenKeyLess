@@ -26,7 +26,7 @@ const accountSlice = createSlice({
   initialState: { isLoading: false, list: initialState },
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getAccountList.pending, (state, action) => {
+    builder.addCase(getAccountList.pending, state => {
       return { ...state, isLoading: true };
     });
     builder.addCase(getAccountList.fulfilled, (state, action) => {
