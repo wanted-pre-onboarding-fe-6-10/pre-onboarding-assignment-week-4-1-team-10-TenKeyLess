@@ -15,20 +15,20 @@ const UserBox = () => {
   const { list } = useSelector((state: ReducerType) => state.user);
 
   useEffect(() => {
-    const token = GetToken();
-    if (token) {
+    if (GetToken()) {
       dispatch(getUserList(params));
       dispatch(getFullUserList(parseInt(params._limit)));
-    } else {
-      nav('/');
     }
-  }, []);
+    if (!GetToken()) nav('/');
+  }, [params]);
+
   return (
-    <>
+    <ul>
       {list.map(user => {
+        const { name, email, gender_origin, birth_date, phone_number, last_login } = user;
         return <li key={user.uuid}>{user.id}</li>;
       })}
-    </>
+    </ul>
   );
 };
 
