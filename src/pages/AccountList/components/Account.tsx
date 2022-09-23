@@ -6,18 +6,17 @@ import { GetToken } from '../../../repository/TokenRepository';
 import { AppDispatch } from '../../../store/';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
-import { getFullAccountList } from '../../../store/services/pageSlice';
+import { getFullAccountList } from '../../../store/services/paramSlice';
 import AccountTitle from './AccountTitle';
 
 const Account = () => {
   const nav = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { list } = useSelector((state: ReducerType) => state.account);
-  const { params } = useSelector((state: ReducerType) => state.page);
+  const { params } = useSelector((state: ReducerType) => state.param);
 
-  const toUserDetail = (id: number) => {
-    nav(`/user/${id}`);
-  };
+  const toUserDetail = (id: number) => nav(`/user/${id}`);
+  const toAccountDetail = (number: string) => nav(`/account/${number}`);
 
   useEffect(() => {
     if (GetToken()) {
@@ -36,7 +35,7 @@ const Account = () => {
             <div>{index + 1}</div>
             <div onClick={() => toUserDetail(account.user_id)}>{account.user_id}</div>
             <div>{account.broker_id}</div>
-            <div>{account.number}</div>
+            <div onClick={() => toAccountDetail(account.number)}>{account.number}</div>
             <div>{account.status}</div>
             <div>{account.name}</div>
             <div>{account.assets}</div>

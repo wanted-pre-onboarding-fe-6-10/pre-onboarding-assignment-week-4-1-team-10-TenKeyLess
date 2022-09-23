@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { filterIsActive } from '../../../store/services/pageSlice';
+import { updateParams } from '../../../store/services/paramSlice';
 import { AppDispatch } from '../../../store/';
 import { getAccountList } from '../../../store/services/accountSlice';
 import { useSelector } from 'react-redux';
@@ -7,13 +7,13 @@ import { ReducerType } from '../../../store/rootReducer';
 
 const Filters = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { params } = useSelector((state: ReducerType) => state.page);
+  const { params } = useSelector((state: ReducerType) => state.param);
 
   const selectFilter: React.ChangeEventHandler<HTMLSelectElement> = e => {
     const { name, value } = e.target;
     const isSelected = name === 'is_active' ? value === 'true' : value;
     const select = value !== '0' ? { [name]: isSelected } : { [name]: null };
-    dispatch(filterIsActive(select));
+    dispatch(updateParams(select));
     dispatch(getAccountList(params));
   };
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getFullUserList } from '../../../store/services/pageSlice';
+import { getFullUserList } from '../../../store/services/paramSlice';
 import { GetToken } from '../../../repository/TokenRepository';
 import { AppDispatch } from '../../../store/';
 import { ReducerType } from '../../../store/rootReducer';
@@ -11,7 +11,7 @@ import { getUserList } from '../../../store/services/userSlice';
 const UserBox = () => {
   const nav = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { params } = useSelector((state: ReducerType) => state.page);
+  const { params } = useSelector((state: ReducerType) => state.param);
   const { list } = useSelector((state: ReducerType) => state.user);
 
   useEffect(() => {

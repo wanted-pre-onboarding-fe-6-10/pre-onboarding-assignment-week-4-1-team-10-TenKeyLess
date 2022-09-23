@@ -36,23 +36,11 @@ const initialParams: Params = {
   q: null,
 };
 
-const pageSlice = createSlice({
+const paramSlice = createSlice({
   name: 'page',
   initialState: { params: initialParams, accountPages: [''], userPages: [''] },
   reducers: {
-    updatePage: (state, action) => {
-      state.params = { ...state.params, _page: action.payload };
-    },
-    updateLimit: (state, action) => {
-      state.params = { ...state.params, _limit: action.payload };
-    },
-    updateSort: (state, action) => {
-      state.params = { ...state.params, _sort: action.payload };
-    },
-    updateOrder: (state, action) => {
-      state.params = { ...state.params, _order: action.payload };
-    },
-    filterIsActive: (state, action) => {
+    updateParams: (state, action) => {
       state.params = { ...state.params, ...action.payload };
     },
     resetParams: state => {
@@ -69,6 +57,5 @@ const pageSlice = createSlice({
   },
 });
 
-export const { updatePage, updateLimit, updateOrder, updateSort, filterIsActive } =
-  pageSlice.actions;
-export default pageSlice.reducer;
+export const { updateParams } = paramSlice.actions;
+export default paramSlice.reducer;

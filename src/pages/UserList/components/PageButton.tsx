@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../store/';
 import { ReducerType } from '../../../store/rootReducer';
-import { updatePage } from '../../../store/services/pageSlice';
+import { updateParams } from '../../../store/services/paramSlice';
 import { getUserList } from '../../../store/services/userSlice';
 
 const PageButton = () => {
-  const { params, userPages } = useSelector((state: ReducerType) => state.page);
+  const { params, userPages } = useSelector((state: ReducerType) => state.param);
   const dispatch = useDispatch<AppDispatch>();
 
   const changePage: React.MouseEventHandler<HTMLButtonElement> = async e => {
-    const { value } = e.target as HTMLButtonElement;
-    dispatch(updatePage(value));
-    console.log(params._page);
+    const { name, value } = e.target as HTMLButtonElement;
+    const newParam = { [name]: value };
+    dispatch(updateParams(newParam));
     dispatch(getUserList(params));
   };
 
@@ -19,7 +19,7 @@ const PageButton = () => {
     <>
       {userPages.map(page => {
         return (
-          <button key={page} value={page} onClick={changePage}>
+          <button key={page} value={page} name="_page" onClick={changePage}>
             {page}
           </button>
         );
