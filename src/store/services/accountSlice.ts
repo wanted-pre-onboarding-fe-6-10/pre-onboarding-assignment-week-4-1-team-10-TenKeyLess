@@ -27,13 +27,14 @@ const accountSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(getAccountList.pending, state => {
-      return { ...state, isLoading: true };
+      state.isLoading = true;
     });
     builder.addCase(getAccountList.fulfilled, (state, action) => {
       if (action.payload === 'jwt expired') {
         RemoveToken();
       }
-      return { ...state, list: action.payload, isLoading: false };
+      state.list = action.payload;
+      state.isLoading = false;
     });
     builder.addCase(getAccountList.rejected, (state, action) => {
       const err = action.payload;

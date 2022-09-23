@@ -30,6 +30,9 @@ const initialParams: Params = {
   _limit: '10',
   _sort: null,
   _order: null,
+  broker_id: null,
+  status: null,
+  is_active: null,
   q: null,
 };
 
@@ -49,6 +52,9 @@ const pageSlice = createSlice({
     updateOrder: (state, action) => {
       state.params = { ...state.params, _order: action.payload };
     },
+    filterIsActive: (state, action) => {
+      state.params = { ...state.params, ...action.payload };
+    },
     resetParams: state => {
       state.params = initialParams;
     },
@@ -63,13 +69,6 @@ const pageSlice = createSlice({
   },
 });
 
-export const { updatePage, updateLimit, updateOrder, updateSort } = pageSlice.actions;
+export const { updatePage, updateLimit, updateOrder, updateSort, filterIsActive } =
+  pageSlice.actions;
 export default pageSlice.reducer;
-
-// getPageList: (state, action) => {
-//     const pages = Array.from(
-//       { length: Math.ceil(state.list.length / action.payload) },
-//       (value, index) => (index + 1).toString()
-//     );
-//     state.pageList = pages;
-//   },

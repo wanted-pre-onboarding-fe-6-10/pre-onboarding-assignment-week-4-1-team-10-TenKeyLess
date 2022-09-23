@@ -49,15 +49,16 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(loginRequest.pending, (state, action) => {
-      return { ...state, isLoading: true };
+      state.isLoading = true;
     });
     builder.addCase(loginRequest.fulfilled, (state, action) => {
-      return { ...state, userId: action.payload, isLoading: false };
+      state.isLoading = false;
+      state.userId = action.payload;
     });
     builder.addCase(loginRequest.rejected, (state, action) => {
       const err = action.payload;
       console.error(err);
-      return { ...state, isLoading: false, errorMessage: err as string };
+      state.errorMessage = err as string;
     });
   },
 });
