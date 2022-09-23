@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserService } from 'api/UserService';
+import { getUserService } from '../../api/UserService';
 import { AxiosError } from 'axios';
-import { Params } from 'src/types/types';
+import { Params, User } from 'src/types/types';
 
 export const getUserList = createAsyncThunk(
   'user/get',
@@ -18,11 +18,24 @@ export const getUserList = createAsyncThunk(
   }
 );
 
+const initailList: User[] = [];
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: { isLoading: false, list: [] },
+  initialState: { isLoading: false, list: initailList },
   reducers: {},
-  extraReducers: {},
+  extraReducers: builder => {
+    builder.addCase(getUserList.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUserList.fulfilled, (state, action) => {
+      state.list = action.payload;
+    });
+    builder.addCase(getUserList.rejected, (state, action) => {
+      const err = action.payload;
+      console.error(err);
+    });
+  },
 });
 
 export default userSlice.reducer;
