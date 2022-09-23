@@ -25,38 +25,41 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-mainColor w-full h-screen flex flex-col items-center">
+    <div className="bg-sky-300 w-full h-screen flex flex-col items-center">
       <h1 className="text-4xl mt-32 mb-10">December &amp; Company</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col boreder-2  w-7/12">
-        <label htmlFor="email" className="py-3">
-          Email
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col border-[1px] border-black w-7/12"
+      >
+        <label className="py-3">
+          <p className="w-10">Email</p>
+          <input
+            className="w-5/6 p-2 rounded-md"
+            placeholder="이메일을 입력하세요"
+            type="email"
+            {...register('email', {
+              required: true,
+              validate: value => value.length > 0,
+            })}
+          />
         </label>
-        <input
-          className="p-2 rounded-md"
-          placeholder="이메일을 입력하세요"
-          type="email"
-          {...register('email', {
-            required: true,
-            validate: value => value.length > 0,
-          })}
-        />
-        {errors.email && <p className="text-red-900">이메일을 입력하세요.</p>}
+        {errors.email && <p className="text-red-400">이메일을 입력하세요.</p>}
 
-        <label htmlFor="password" className="py-3">
-          password
+        <label>
+          <p>password</p>
+          <input
+            className="w-5/6 p-2 rounded-md"
+            placeholder="8글자 이상(1개이상의 영문, 숫자, 특수문자 포함)"
+            type="password"
+            {...register('password', {
+              required: true,
+              validate: {
+                positiveLength: value => value.length >= 8,
+                lessThanHundred: value => pwIsValid(value),
+              },
+            })}
+          />
         </label>
-        <input
-          className="p-2 rounded-md"
-          placeholder="8글자 이상(1개이상의 영문, 숫자, 특수문자 포함)"
-          type="password"
-          {...register('password', {
-            required: true,
-            validate: {
-              positiveLength: value => value.length >= 8,
-              lessThanHundred: value => pwIsValid(value),
-            },
-          })}
-        />
         {errors.password && errors.password.type === 'required' && (
           <p className="boreder-2 text-red-900">비밀번호를 입력하세요!</p>
         )}

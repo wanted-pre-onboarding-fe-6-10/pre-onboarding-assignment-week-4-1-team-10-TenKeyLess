@@ -32,15 +32,16 @@ export const accountSlice = createSlice({
 
   reducers: {},
 
+  // [TODO] rejected일떄 처리
   extraReducers: builder => {
     // 3. reducer로 action캐치함
     builder.addCase(getAccountsRequest.fulfilled, (state, action) => {
-      return { ...state, accounts: action.payload }; // [질문] 반환되는 값이 state전체인지? 아님 account state만 인지?
+      return { ...state, accounts: action.payload };
     });
 
     // 3. reducer로 action캐치함
     builder.addCase(getFullAccountRequest.fulfilled, (state, action) => {
-      return { ...state, totalCount: action.payload.length }; // ???
+      return { ...state, totalCount: action.payload.length };
     });
   },
 });

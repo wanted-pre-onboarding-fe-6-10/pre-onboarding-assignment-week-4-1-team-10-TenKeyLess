@@ -43,10 +43,15 @@ export const loginRequest = userData => {
 };
 
 // 1. api 메서드 만들고 - 페이지네이션
+//http://localhost:4000/accounts?_page=1&_limit=10&broker_id=280&status=2&is_active=false
+// [TODO] 쿼리 만드는 코드 util로 분리할 수 있는지? <-사용자 리스트 한 후 따져보기
 export const accountsRequest = pageNationData => {
-  return instance.get(
-    `/accounts?_expand=user&_page=${pageNationData.currentPage}&_limit=${pageNationData.count}`
-  );
+  let query = '';
+  const queryArr = Object.entries(pageNationData);
+
+  queryArr.forEach(arr => (query += `${arr[1] && arr[0]}=${arr[1]}&`));
+
+  return instance.get(`/accounts?_expand=user&${query}`);
 };
 
 export const userDetailRequest = () => {

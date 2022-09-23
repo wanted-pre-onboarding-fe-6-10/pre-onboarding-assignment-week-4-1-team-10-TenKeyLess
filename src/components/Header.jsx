@@ -11,7 +11,6 @@ const HeaderLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
   const userName = useSelector(state => state.userName.userName);
-
   return (
     <Layout className="min-h-screen">
       <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
@@ -31,10 +30,11 @@ const HeaderLayout = ({ children }) => {
             return (
               <Link key={data.id} to={data.url}>
                 <li
-                  className="ant-menu-item pl-6"
+                  className={`ant-menu-item pl-6 bg-[${
+                    pathname.slice(1) === data.url ? '#198fff' : ''
+                  }]`}
                   style={{
                     marginTop: '20px',
-                    backgroundColor: `${pathname.slice(1).includes(data.url) ? '#198fff' : ''}`,
                   }}
                 >
                   {data.icon}
@@ -69,7 +69,7 @@ const HeaderLayout = ({ children }) => {
           </div>
         </Header>
 
-        <Content className="bg-orange-200 m-4">
+        <Content className="bg-orange-200 pt-5 px-5">
           <div>{children}</div>
         </Content>
         <Footer className="w-full fixed bottom-0 py-4 pl-0 pr-14 flex justify-center bg-gray-500">

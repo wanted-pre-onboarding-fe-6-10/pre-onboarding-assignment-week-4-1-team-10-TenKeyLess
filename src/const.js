@@ -12,14 +12,14 @@ export const SIDER = [
     id: 2,
     name: '계좌 목록',
     keyword: 'accounts',
-    url: 'accounts',
+    url: 'accounts/1',
     icon: <FileOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
   },
   {
     id: 3,
     name: '사용자 목록',
     keyword: 'users',
-    url: 'users',
+    url: 'users/1',
     icon: <UserOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
   },
   {
@@ -59,7 +59,6 @@ export const BROKERS = {
   271: '토스증권',
 };
 
-// 계좌 형식
 export const BROKER_FORMAT = {
   209: '00-00000000-00',
   218: '00-0000000-000',
