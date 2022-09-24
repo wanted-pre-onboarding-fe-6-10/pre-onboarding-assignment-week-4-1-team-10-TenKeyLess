@@ -51,7 +51,7 @@ for (let i = 1; i < 101; i++) {
     const status = accountStatusCode.sort(() => 0.5 - Math.random())[0]
     const account = {
       id: j,
-      user_id: i,
+      userId: i,
       uuid: faker.datatype.uuid(),
       broker_id: accountBrokerCode,
       status,
