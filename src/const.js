@@ -12,14 +12,14 @@ export const SIDER = [
     id: 2,
     name: '계좌 목록',
     keyword: 'accounts',
-    url: 'accounts/1',
+    url: 'accounts',
     icon: <FileOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
   },
   {
     id: 3,
     name: '사용자 목록',
     keyword: 'users',
-    url: 'users/1',
+    url: 'users',
     icon: <UserOutlined style={{ fontSize: '20px', padding: '0 15px' }} />,
   },
   {

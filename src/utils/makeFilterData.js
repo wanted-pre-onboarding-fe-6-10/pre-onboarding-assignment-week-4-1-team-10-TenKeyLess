@@ -1,6 +1,4 @@
-import React from 'react';
-
-const MakeFilterData = obj => {
+const makeFilterData = obj => {
   const filterData = Object.entries(obj).map(data => {
     return {
       text: data[1],
@@ -15,4 +13,4 @@ const MakeFilterData = obj => {
   return filterData;
 };
 
-export default MakeFilterData;
+export default makeFilterData;

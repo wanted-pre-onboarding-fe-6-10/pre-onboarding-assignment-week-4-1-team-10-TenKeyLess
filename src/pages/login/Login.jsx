@@ -20,7 +20,7 @@ const Login = () => {
       if (result.error) {
         return;
       }
-      navigate('/accounts/1');
+      navigate('/accounts?');
     });
   };
 

@@ -1,29 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { accountsRequest } from '../api/axios';
 
-export const getAccountsRequest = createAsyncThunk(
-  'GET_ACCOUNTS',
-  async (pageNationData, thunkApi) => {
-    try {
-      const { data } = await accountsRequest(pageNationData); // 2. store 밖에서 비동기 코드 만들고
-      return data;
-    } catch {
-      return thunkApi.rejectWithValue('err');
-    }
-  }
-);
+// action1
+export const getAccountsRequest = createAsyncThunk('GET_ACCOUNTS', async (_, thunkApi) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  let pageNationData = ''; // &_page=1&_limit=10
 
-export const getFullAccountRequest = createAsyncThunk(
-  'GET_ACCOUNTS_Full',
-  async (pageNationData, thunkApi) => {
-    try {
-      const { data } = await accountsRequest(pageNationData); // 2. store 밖에서 비동기 코드 만들고
-      return data;
-    } catch {
-      return thunkApi.rejectWithValue('err');
+  Object.entries(dataForm).forEach(data => {
+    const key = data[0];
+    const value = queryParams.get(key);
+
+    if (value !== '' && value !== null) {
+      pageNationData += `&${key}=${value}`;
     }
+  });
+
+  try {
+    return await accountsRequest(pageNationData).then(response => ({
+      totalCount: response.headers['x-total-count'],
+      data: response.data,
+    })); // 2. store 밖에서 비동기 코드 만들고
+  } catch {
+    return thunkApi.rejectWithValue('err');
   }
-);
+});
 
 // <store>
 export const accountSlice = createSlice({
@@ -36,14 +36,18 @@ export const accountSlice = createSlice({
   extraReducers: builder => {
     // 3. reducer로 action캐치함
     builder.addCase(getAccountsRequest.fulfilled, (state, action) => {
-      return { ...state, accounts: action.payload };
-    });
-
-    // 3. reducer로 action캐치함
-    builder.addCase(getFullAccountRequest.fulfilled, (state, action) => {
-      return { ...state, totalCount: action.payload.length };
+      return { ...state, accounts: action.payload.data, totalCount: action.payload.totalCount };
     });
   },
 });
 
 export default accountSlice.reducer;
+
+const dataForm = {
+  _page: 0,
+  _limit: 0,
+  broker_id: '',
+  status: '',
+  is_active: '',
+  q: '',
+};

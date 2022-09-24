@@ -12,10 +12,10 @@ const AppRouter = () => {
     <Auth>
       <HeaderLayout>
         <Routes>
-          <Route path="/accounts/:page" element={<AccountList />} />
-          <Route path="/accountDetail/:id" element={<AccountDetail />} />
+          <Route path="/accounts" element={<AccountList />} />
+          <Route path="/account-detail/:id" element={<AccountDetail />} />
           <Route path="/users" element={<UserList />} />
-          <Route path="/userDetail/:id" element={<UserDetail />} />
+          <Route path="/user-detail/:id" element={<UserDetail />} />
         </Routes>
       </HeaderLayout>
     </Auth>

@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
-import { getAccountsRequest, getFullAccountRequest } from '../../store/accountSlice';
+import { getAccountsRequest } from '../../store/accountSlice';
 import MakeSelectBox from '../../components/MakeSelectBox';
 import MakeInput from '../../components/MakeInput';
 import { BROKERS, ACCOUNT_STATUS } from '../../const';
-import MakeFilterData from '../../utils/makeFilterData';
-import { useDispatch, useSelector } from 'react-redux';
+import makeFilterData from '../../utils/makeFilterData';
+import { useDispatch } from 'react-redux';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
-const BrokerArr = MakeFilterData(BROKERS);
-const StatusArr = MakeFilterData(ACCOUNT_STATUS);
-const ActiveArr = MakeFilterData({ true: 'on', false: 'off' });
+const BrokerArr = makeFilterData(BROKERS);
+const StatusArr = makeFilterData(ACCOUNT_STATUS);
+const ActiveArr = makeFilterData({ true: 'on', false: 'off' });
 
-const Filter = ({ current, COUNT_PER_PAGE }) => {
+const Filter = ({ COUNT_PER_PAGE }) => {
   const [putData, setPutData] = useState({
+    _page: 1,
+    _limit: COUNT_PER_PAGE,
     broker_id: '',
     status: '',
     is_active: '',
     q: '',
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  console.log(putData);
   return (
     <div className="grid grid-flow-col justify-items-center place-items-center h-24 mb-5 px-10  border-zinc-900 border-2">
       <MakeSelectBox
         list={BrokerArr}
         value={putData.broker_id}
-        label="Broker"
+        label="증권사"
         id="broker_id"
         onChange={value => setPutData(prev => ({ ...prev, broker_id: value.value }))}
       />
@@ -33,7 +36,7 @@ const Filter = ({ current, COUNT_PER_PAGE }) => {
       <MakeSelectBox
         list={StatusArr}
         value={putData.status}
-        label="Status"
+        label="계좌상태"
         id="status"
         onChange={value => setPutData(prev => ({ ...prev, status: value.value }))}
       />
@@ -41,14 +44,14 @@ const Filter = ({ current, COUNT_PER_PAGE }) => {
       <MakeSelectBox
         list={ActiveArr}
         value={putData.is_active}
-        label="Active"
+        label="활성화여부"
         id="is_active"
         onChange={value => setPutData(prev => ({ ...prev, is_active: value.value }))}
       />
 
       <MakeInput
         id="q"
-        label="Full search"
+        label="전체 검색"
         value={putData.q}
         onChange={value => setPutData(prev => ({ ...prev, q: value }))}
       />
@@ -56,22 +59,28 @@ const Filter = ({ current, COUNT_PER_PAGE }) => {
         <button
           className="mr-10 ml-[-5rem]"
           onClick={() => {
+            // 1. 필터 검색 값만 초기화 > 이휴 검색버튼 눌러야 전체 api 호출되는 것임.
             setPutData({
+              _page: 1,
+              _limit: COUNT_PER_PAGE,
               broker_id: '',
               status: '',
               is_active: '',
               q: '',
             });
-            dispatch(getFullAccountRequest({ _page: '', _limit: '' })); // 🍒 get api - 전체 길이 다시 저장해서 페이지버튼 전체 나오게끔.
           }}
         >
           초기화
         </button>
         <button
           onClick={() => {
-            // 🍒 get api
-            dispatch(getAccountsRequest({ _page: current, _limit: COUNT_PER_PAGE, ...putData })); // 🍒 get api - 필터된 데이터 10개씩 요청
-            dispatch(getFullAccountRequest({ ...putData })); // 🍒 get api - 필터된 데이터 전체 요청 > 전체 길이 저장 > 페이지버튼 출력
+            // 🙏🏻1. url 주소 변경
+            navigate({
+              pathname: '/accounts',
+              search: `${createSearchParams(putData)}`,
+            });
+            // 🙏🏻 2. api 호출
+            dispatch(getAccountsRequest()); // get api - 필터된 데이터 10개씩 요청
           }}
         >
           검색
