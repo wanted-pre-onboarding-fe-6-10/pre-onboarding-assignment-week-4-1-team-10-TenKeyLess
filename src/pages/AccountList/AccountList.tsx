@@ -1,12 +1,11 @@
 import Account from './components/Account';
-import AccountFilter from './components/AccountFilter';
-import AccountTitle from './components/AccountTitle';
+import AccountControl from './components/AccountControl';
 import PageButton from './components/PageButtons';
 
 const AccountList = () => {
   return (
     <>
-      <AccountFilter />
+      <AccountControl />
       <Account />
       <PageButton />
     </>

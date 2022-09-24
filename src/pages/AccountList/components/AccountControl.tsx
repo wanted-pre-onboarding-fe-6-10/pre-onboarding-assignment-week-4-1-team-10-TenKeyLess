@@ -1,6 +1,6 @@
 import Filters from './Filters';
 
-const AccountFilter = () => {
+const AccountControl = () => {
   return (
     <div className="flex justify-between w-10/12">
       <form>
@@ -12,4 +12,4 @@ const AccountFilter = () => {
   );
 };
 
-export default AccountFilter;
+export default AccountControl;
