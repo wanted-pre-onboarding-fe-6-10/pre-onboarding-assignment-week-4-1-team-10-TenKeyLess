@@ -7,8 +7,9 @@ import { RemoveToken } from '../../repository/TokenRepository';
 export const getUserList = createAsyncThunk(
   'user/get',
   async (params: Params, { rejectWithValue }) => {
+    const userParams = { ...params, _expand: null, _embed: 'accounts' as const };
     try {
-      const { data } = await getUserService(params);
+      const { data } = await getUserService(userParams);
       return data;
     } catch (e) {
       if (e instanceof AxiosError) {

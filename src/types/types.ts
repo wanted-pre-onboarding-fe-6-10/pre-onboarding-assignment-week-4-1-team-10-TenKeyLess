@@ -5,7 +5,7 @@ export interface LoginInput {
 
 export interface Account {
   id: number;
-  user_id: number;
+  userId: number;
   uuid: string;
   broker_id: string;
   status: number;
@@ -16,6 +16,7 @@ export interface Account {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  user: User;
 }
 
 export interface Params {
@@ -23,10 +24,12 @@ export interface Params {
   _limit: '10' | '20' | '30';
   _sort: string | null;
   _order: 'desc' | 'asc' | null;
-  broker_id: Brokers | null;
+  broker_id: string | null;
   status: number | null;
   is_active: boolean | null;
   q: string | null;
+  _expand: 'user' | null;
+  _embed: 'accounts' | null;
 }
 
 export interface User {
@@ -44,31 +47,16 @@ export interface User {
   last_login: string;
   created_at: string;
   updated_at: string;
+  accounts: Account[];
 }
 
-type Brokers =
-  | 209
-  | 218
-  | 230
-  | 238
-  | 240
-  | 243
-  | 247
-  | 262
-  | 261
-  | 263
-  | 264
-  | 266
-  | 265
-  | 267
-  | 268
-  | 269
-  | 270
-  | 279
-  | 280
-  | 288
-  | 287
-  | 290
-  | 291
-  | 292
-  | 271;
+export interface UserSetting {
+  id: number;
+  uuid: string;
+  allow_marketing_push: boolean;
+  allow_invest_push: boolean;
+  is_active: boolean;
+  is_staff: boolean;
+  created_at: string;
+  updated_at: string;
+}
