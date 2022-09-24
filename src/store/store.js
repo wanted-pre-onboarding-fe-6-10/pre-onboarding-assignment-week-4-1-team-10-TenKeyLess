@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage'; // 📍
 
 import accountReducer from './accountSlice';
 import userNameReducer from './userNameSlice';
-import userDetailReducer from './userDetailSlice';
+import userDetailReducer from './usersSlice';
 
 // 📍
 const persistConfig = {
@@ -16,7 +16,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, userNameReducer); //  userName은 userNameReducer가 아닌 persistedReducer가 reducer값이 됨.
 
 export const store = configureStore({
-  reducer: { userName: persistedReducer, accounts: accountReducer, userDetails: userDetailReducer },
+  reducer: { userName: persistedReducer, accounts: accountReducer, users: userDetailReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -30,6 +30,6 @@ store형태
 {
   userName: {userName : amdin} ,
   accounts : { accounts : [{},{},{}...], totalCount : 335 } // 페이지네이션 대상 10개씩 저장
-  userDetails : {userDetails : [{},{},{}...]} // 페이지네이션 대상 10개씩 저장
+  users : {users : [{},{},{}...], totalCount : 100} // 페이지네이션 대상 10개씩 저장
 }
 */

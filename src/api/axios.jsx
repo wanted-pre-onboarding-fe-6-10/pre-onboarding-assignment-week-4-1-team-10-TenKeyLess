@@ -48,10 +48,9 @@ export const accountsRequest = pageNationData => {
   return instance.get(`/accounts?_expand=user&_start=1&_limit=10${pageNationData}`);
 };
 
-export const userDetailRequest = () => {
-  return instance.get('/users');
+export const usersRequest = pageNationData => {
+  return instance.get(`/users?_embed=accounts&_start=1&_limit=10${pageNationData}`);
 };
 
-// export const userSettingRequest = () => {
-//   //
-// };
+// f f 필터
+// http://localhost:4000/users?_embed=accounts&setting.is_active=false&setting.is_staff=false

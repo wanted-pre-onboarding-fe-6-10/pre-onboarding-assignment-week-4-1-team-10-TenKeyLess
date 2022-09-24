@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { accountsRequest } from '../api/axios';
+import { accountsDataForm } from '../const';
 
 // action1
 export const getAccountsRequest = createAsyncThunk('GET_ACCOUNTS', async (_, thunkApi) => {
   const queryParams = new URLSearchParams(window.location.search);
   let pageNationData = ''; // &_page=1&_limit=10
 
-  Object.entries(dataForm).forEach(data => {
+  Object.entries(accountsDataForm).forEach(data => {
     const key = data[0];
     const value = queryParams.get(key);
 
@@ -42,12 +43,3 @@ export const accountSlice = createSlice({
 });
 
 export default accountSlice.reducer;
-
-const dataForm = {
-  _page: 0,
-  _limit: 0,
-  broker_id: '',
-  status: '',
-  is_active: '',
-  q: '',
-};

@@ -94,3 +94,21 @@ export const ACCOUNT_STATUS = {
   3: '투자중지',
   4: '해지',
 };
+
+export const accountsDataForm = {
+  _page: 0,
+  _limit: 0,
+  broker_id: '',
+  status: '',
+  is_active: '',
+  q: '',
+};
+
+export const accountFilterDataForm = {
+  broker_id: '',
+  status: '',
+  is_active: '',
+  q: '',
+};
+
+export const usersDataForm = { _page: 0, _limit: 0, is_staff: '', is_active: '', q: '' };

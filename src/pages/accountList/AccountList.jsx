@@ -3,8 +3,8 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccountsRequest } from '../../store/accountSlice';
-import { BROKERS, ACCOUNT_STATUS } from '../../const';
-import Filter from './Filter';
+import { BROKERS, ACCOUNT_STATUS, accountFilterDataForm } from '../../const';
+import AccountFilter from './AccountFilter';
 import 'antd/dist/antd.css';
 import { Table, Pagination } from 'antd';
 
@@ -20,7 +20,7 @@ const AccountList = () => {
     const queryParams = new URLSearchParams(window.location.search);
     let pageNationData = {}; // &_page=1&_limit=10 제외한 그 뒤에 필터조건 쿼리
 
-    Object.entries(filterDataForm).forEach(data => {
+    Object.entries(accountFilterDataForm).forEach(data => {
       const key = data[0];
       const value = queryParams.get(key);
 
@@ -51,7 +51,7 @@ const AccountList = () => {
 
   return (
     <div>
-      <Filter COUNT_PER_PAGE={COUNT_PER_PAGE} />
+      <AccountFilter COUNT_PER_PAGE={COUNT_PER_PAGE} />
 
       <Table
         columns={columns}
@@ -82,6 +82,10 @@ const makeTableData = DATA => {
   const tableData = [];
 
   for (let i = 0; i < DATA.length; i += 1) {
+    const rate = (((+DATA[i].assets - +DATA[i].payments) / +DATA[i].payments) * 100)
+      .toString()
+      .slice(0, 5); // slice(0,7)
+
     tableData.push({
       key: DATA[i].uuid,
       id: DATA[i].id,
@@ -95,6 +99,7 @@ const makeTableData = DATA => {
       createdAt: DATA[i].created_at,
       status: ACCOUNT_STATUS[DATA[i].status],
       isActive: DATA[i].is_active ? 'on' : 'off',
+      returnRate: `${rate}`,
     });
   }
 
@@ -132,10 +137,12 @@ const columns = [
   {
     title: '수익률',
     dataIndex: 'returnRate',
+    render: text => rateColor(text),
   },
   {
     title: '계좌개설일',
     dataIndex: 'createdAt',
+    render: text => <div>{`${new Date(text).toLocaleString()}`}</div>,
   },
   {
     title: '계좌상태',
@@ -148,9 +155,6 @@ const columns = [
   },
 ];
 
-const filterDataForm = {
-  broker_id: '',
-  status: '',
-  is_active: '',
-  q: '',
+const rateColor = text => {
+  return <div className={`${+text > 0 ? 'text-sky-600' : 'text-red-700'}`}>{text}%</div>;
 };

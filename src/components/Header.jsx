@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAccountsRequest } from '../store/accountSlice';
-import { getUserDetailRequest } from '../store/userDetailSlice';
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout } from 'antd';
 import { SIDER } from '../const';
@@ -13,12 +12,6 @@ const HeaderLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAccountsRequest());
-    dispatch(getUserDetailRequest());
-  }, []);
 
   const userName = useSelector(state => state.userName.userName);
 
