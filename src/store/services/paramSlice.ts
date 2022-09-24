@@ -26,6 +26,8 @@ export const getFullUserList = createAsyncThunk(
 );
 
 const initialParams: Params = {
+  _expand: 'user',
+  _embed: null,
   _page: '1',
   _limit: '10',
   _sort: null,
