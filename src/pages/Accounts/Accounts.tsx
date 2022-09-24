@@ -24,7 +24,7 @@ export interface User {
 }
 export interface Account {
   id: number;
-  user_id: number;
+  userId: number;
   uuid: string;
   broker_id: string;
   status: number;
@@ -54,6 +54,7 @@ const Accounts = () => {
   const getNextPage = () => {
     setPage(prev => prev + 1);
   };
+
   useEffect(() => {
     getAccounts();
   }, [page]);
@@ -64,7 +65,7 @@ const Accounts = () => {
     }
   }, [data]);
   return (
-    <div className="px-32 py-16 w-full">
+    <div className="px-32 pb-16 w-full bg-gray-100">
       {loading && accounts.length === 0 ? (
         <div>Loading</div>
       ) : (

@@ -10,7 +10,7 @@ interface TabProps {
 export default function Sidebar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [accessToken, setAccessToken] = useRecoilState(userInfoAtom);
   const [accounts, setAccounts] = useRecoilState(accountListAtom);
   const [users, setUsers] = useRecoilState(userListAtom);

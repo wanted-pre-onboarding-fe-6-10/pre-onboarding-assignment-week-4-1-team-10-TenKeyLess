@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useMutation from './../../../hooks/useMutation';
 import { useRecoilState } from 'recoil';
 import { accountListAtom } from 'src/atoms';
-import SearchBar from './../../../components/common/SearchBar';
+import SearchBar from 'components/common/SearchBar';
 
 const AccountSearch = () => {
   const [accounts, setAccounts] = useRecoilState(accountListAtom);
