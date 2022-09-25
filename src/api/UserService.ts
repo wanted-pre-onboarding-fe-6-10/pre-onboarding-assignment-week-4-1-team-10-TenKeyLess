@@ -6,8 +6,8 @@ export const getUserService = async (params?: Params) => {
   return response;
 };
 
-export const getUserSettingService = async () => {
-  const response = await instance.get('/userSetting');
+export const getUserSettingService = async (params?: Params) => {
+  const response = await instance.get('/userSetting', { params: params });
   return response;
 };
 
