@@ -5,22 +5,28 @@ import { getAccountService } from '../../api/AccountService';
 
 export const getFullAccountList = createAsyncThunk(
   'page/accounts',
-  async (limit: number, { rejectWithValue }) => {
-    const { data } = await getAccountService();
-    const pages = Array.from({ length: Math.ceil(data.length / limit) }, (v, i) =>
-      (i + 1).toString()
-    );
+  async (params: Params, { rejectWithValue }) => {
+    const newParams = { ...params, _page: null, _limit: null };
+    const { data } = await getAccountService(newParams);
+    const pages =
+      params._limit &&
+      Array.from({ length: Math.ceil(data.length / parseInt(params._limit)) }, (v, i) =>
+        (i + 1).toString()
+      );
     return pages;
   }
 );
 
 export const getFullUserList = createAsyncThunk(
   'page/users',
-  async (limit: number, { rejectWithValue }) => {
-    const { data } = await getUserService();
-    const pages = Array.from({ length: Math.ceil(data.length / limit) }, (v, i) =>
-      (i + 1).toString()
-    );
+  async (params: Params, { rejectWithValue }) => {
+    const newParams = { ...params, _page: null, _limit: null, _expand: null };
+    const { data } = await getUserService(newParams);
+    const pages =
+      params._limit &&
+      Array.from({ length: Math.ceil(data.length / parseInt(params._limit)) }, (v, i) =>
+        (i + 1).toString()
+      );
     return pages;
   }
 );
@@ -36,11 +42,12 @@ const initialParams: Params = {
   status: null,
   is_active: null,
   q: null,
+  allow_marketing_push: null,
 };
 
 const paramSlice = createSlice({
   name: 'page',
-  initialState: { params: initialParams, accountPages: [''], userPages: [''] },
+  initialState: { input: '', params: initialParams, accountPages: [''], userPages: [''] },
   reducers: {
     updateParams: (state, action) => {
       state.params = { ...state.params, ...action.payload };
@@ -48,16 +55,19 @@ const paramSlice = createSlice({
     resetParams: state => {
       state.params = initialParams;
     },
+    search: (state, action) => {
+      state.input = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(getFullAccountList.fulfilled, (state, action) => {
-      state.accountPages = action.payload;
+      state.accountPages = action.payload as string[];
     });
     builder.addCase(getFullUserList.fulfilled, (state, action) => {
-      state.userPages = action.payload;
+      state.userPages = action.payload as string[];
     });
   },
 });
 
-export const { updateParams } = paramSlice.actions;
+export const { updateParams, search } = paramSlice.actions;
 export default paramSlice.reducer;

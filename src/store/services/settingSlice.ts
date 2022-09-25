@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUserSettingService } from '../../api/UserService';
-import { UserSetting } from 'src/types/types';
+import { Params, UserSetting } from 'src/types/types';
 
 const initialUserSetting: UserSetting[] = [];
 
 export const getuserSetting = createAsyncThunk(
   'userSetting/get',
-  async (_, { rejectWithValue }) => {
-    const { data } = await getUserSettingService();
+  async (params: Params, { rejectWithValue }) => {
+    const settingParams = { ...params, _page: null, _limit: null, _expand: null };
+    const { data } = await getUserSettingService(settingParams);
     return data;
   }
 );

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserService } from '../../api/UserService';
+import { getUserService, getUserSettingService } from '../../api/UserService';
 import { AxiosError } from 'axios';
-import { Params, User } from 'src/types/types';
+import { Params, User, UserSetting } from 'src/types/types';
 import { RemoveToken } from '../../repository/TokenRepository';
 
 export const getUserList = createAsyncThunk(
