@@ -10,7 +10,7 @@ interface UseMutationState<T> {
 }
 type UseMutationResult<T> = [(data?: any) => void, UseMutationState<T>];
 
-function useMutation<T = any>(url: string): UseMutationResult<T> {
+function useMutation<T = any>(url: string, method?: string): UseMutationResult<T> {
   const accessToken = useRecoilValue(userInfoAtom);
   const [state, setState] = useState<UseMutationState<T>>({
     loading: true,
@@ -22,7 +22,7 @@ function useMutation<T = any>(url: string): UseMutationResult<T> {
   function mutation(data?: any) {
     setState(prev => ({ ...prev, loading: true }));
     fetch(`${process.env.REACT_APP_BASE_URL}` + url, {
-      method: `${data ? 'POST' : 'GET'}`,
+      method: `${method ? method : data?.name ? 'PATCH' : data ? 'POST' : 'GET'}`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken?.accessToken}`,

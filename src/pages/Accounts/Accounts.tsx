@@ -14,13 +14,13 @@ export interface User {
   email: string;
   age: number;
   gender_origin: number;
-  birth_date: Date;
+  birth_date: string;
   phone_number: string;
   address: string;
   detail_address: string;
-  last_login: Date;
-  created_at: Date;
-  updated_at: Date;
+  last_login: string;
+  created_at: string;
+  updated_at: string;
 }
 export interface Account {
   id: number;
@@ -54,7 +54,6 @@ const Accounts = () => {
   const getNextPage = () => {
     setPage(prev => prev + 1);
   };
-
   useEffect(() => {
     getAccounts();
   }, [page]);

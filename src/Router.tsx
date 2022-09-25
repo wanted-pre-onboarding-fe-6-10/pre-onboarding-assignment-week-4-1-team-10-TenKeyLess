@@ -4,7 +4,6 @@ import Sidebar from 'components/sidebar/sidebar';
 import AccountDetail from 'pages/AccountDetail/AccountDetail';
 import Accounts from 'pages/Accounts/Accounts';
 import Login from 'pages/Auth/Login';
-import Pages from 'pages/Pages';
 import UserDetail from 'pages/UserDetail/UserDetail';
 import Users from 'pages/Users/Users';
 import { useEffect } from 'react';
@@ -18,12 +17,13 @@ const Router = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (userInfo?.accessToken === 'jwt expired') {
+    if (userInfo?.accessToken.includes(' ')) {
       setUserInfo({ accessToken: '', email: '' });
       alert('로그인 유효 기간이 만료됐습니다. 다시 로그인 해주세요.');
       navigate('/');
     }
-  }, [userInfo]);
+  }, [location]);
+  console.log(userInfo);
   return (
     <div>
       {location.pathname === '/' ? null : (
@@ -47,7 +47,10 @@ const Router = () => {
           path="/account/:accountId"
           element={userInfo?.accessToken ? <AccountDetail /> : <Navigate replace to="/" />}
         />
-        <Route path="/user/:userId" element={userInfo?.accessToken ? <UserDetail /> : <Login />} />
+        <Route
+          path="/user/:userId"
+          element={userInfo?.accessToken ? <UserDetail /> : <Navigate replace to="/" />}
+        />
       </Routes>
       <Footer />
     </div>
