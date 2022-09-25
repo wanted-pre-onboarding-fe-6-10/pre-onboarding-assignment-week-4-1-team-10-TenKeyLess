@@ -25,7 +25,7 @@ jobs:
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build
@@ -62,7 +62,7 @@ jobs:
             ${{ runner.OS }}-
             
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
         
       - name: Run JSON Server
         run: npm run gen
