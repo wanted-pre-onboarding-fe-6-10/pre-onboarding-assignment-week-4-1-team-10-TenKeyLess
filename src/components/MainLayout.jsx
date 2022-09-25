@@ -9,9 +9,12 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const HeaderLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   const userName = useSelector(state => state.userName.userName);
+
+  const secondRoute = search.split('&')[0].slice(-1); // _page=1&_limit=10
+  const firstRoute = pathname.slice(1).toUpperCase(); // /accounts ?
 
   return (
     <Layout className="min-h-screen">
@@ -60,13 +63,12 @@ const HeaderLayout = ({ children }) => {
       </Sider>
 
       <Layout className="site-layout">
-        <Header className="header h-1/8 bg-sky-700 text-stone-50 flex justify-between pr-10">
-          <Breadcrumb className="my-5 font-bold text-base text-stone-50 ">
-            {/* [TODO] - 헤더에 주소경로 출력해주기 */}
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item className="font-bold text-base text-stone-50 ">App</Breadcrumb.Item>
-          </Breadcrumb>
+        <Header className="header h-1/8 bg-sky-600  flex justify-between pr-10">
+          <p className="my-5 font-bold text-base text-stone-50">
+            <span>{firstRoute}</span>
+            <span className="mx-5">/</span>
+            <span>{secondRoute}</span>
+          </p>
           <div className="mt-1">
             <span className="text-lg mr-2">{userName}</span>님
           </div>

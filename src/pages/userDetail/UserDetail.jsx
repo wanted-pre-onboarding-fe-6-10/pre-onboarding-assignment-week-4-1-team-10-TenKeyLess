@@ -108,7 +108,7 @@ const UserDetail = () => {
           <h3 className="font-semibold text-lg mb-5">
             보유 계좌 갯수:{userData.accounts.length}개
           </h3>
-          <table border="1" width="90%" height="200" cellspacing="5">
+          <table border="1" width="90%" height="200" cellSpacing="5">
             <thead>
               <tr className="text-center bg-slate-300">
                 <th>증권사</th>
