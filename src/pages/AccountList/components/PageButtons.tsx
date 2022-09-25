@@ -11,8 +11,9 @@ const PageButton = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const changePage: React.MouseEventHandler<HTMLButtonElement> = e => {
-    const { value } = e.target as HTMLButtonElement;
-    dispatch(updateParams(value));
+    const { name, value } = e.target as HTMLButtonElement;
+    const newParam = { [name]: value };
+    dispatch(updateParams(newParam));
     dispatch(getAccountList(params));
   };
 
@@ -20,7 +21,7 @@ const PageButton = () => {
     <>
       {accountPages.map(page => {
         return (
-          <button key={page} value={page} onClick={changePage}>
+          <button key={page} value={page} name="_page" onClick={changePage}>
             {page}
           </button>
         );

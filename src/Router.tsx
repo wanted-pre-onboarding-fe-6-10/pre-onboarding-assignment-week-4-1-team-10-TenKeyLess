@@ -5,14 +5,17 @@ import Login from './pages/Login/Login';
 import UserDetail from './pages/UserDetail/UserDetail';
 import AccountDetail from './pages/AccountDetail/AccountDetail';
 import Header from './components/header/Header';
-import Sidebar from './components/sidebar/Sidebar';
 import Footer from './components/footer/Footer';
+import Sidebar from './components/sidebar/Sidebar';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <Sidebar />
+      <div className="flex flex-col">
+        <Header />
+        <Sidebar />
+      </div>
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user" element={<UserList />} />

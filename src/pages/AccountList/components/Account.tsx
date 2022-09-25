@@ -7,8 +7,11 @@ import { AppDispatch } from '../../../store/';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/rootReducer';
 import { getFullAccountList } from '../../../store/services/paramSlice';
-import AccountTitle from './AccountTitle';
 import toDetail from '../../../utils/toDetail';
+import { handleStatus } from '../../../utils/handleStatus';
+import handleBrokers from '../../../utils/handleBroker';
+import handleDate from '../../../utils/handleDate';
+import addComma from '../../../utils/addComma';
 
 const Account = () => {
   const nav = useNavigate();
@@ -19,27 +22,28 @@ const Account = () => {
   useEffect(() => {
     if (GetToken()) {
       dispatch(getAccountList(params));
-      dispatch(getFullAccountList(parseInt(params._limit)));
+      dispatch(getFullAccountList(params));
     }
     if (!GetToken()) nav('/');
   }, [params]);
 
   return (
-    <ul className="border-solid border-gray-500">
-      <AccountTitle />
+    <ul className="border-solid border-gray-500 ">
       {list.map((account, index) => {
         return (
-          <li className="grid grid-cols-10 gap-4 text-center w-10/12" key={account.uuid}>
-            <div>{index + 1}</div>
+          <li
+            className="m-auto grid grid-cols-9 gap-4 text-center w-10/12 my-3 text-center"
+            key={account.uuid}
+          >
             <div onClick={() => toDetail(nav, '/user/', account.userId)}>{account.user.name}</div>
-            <div>{account.broker_id}</div>
-            <div onClick={() => toDetail(nav, '/account/', account.number)}>{account.number}</div>
-            <div>{account.status}</div>
+            <div>{handleBrokers(account.broker_id)}</div>
+            <div onClick={() => toDetail(nav, '/account/', account.id)}>{account.number}</div>
+            <div>{handleStatus(account.status)}</div>
             <div>{account.name}</div>
-            <div>{account.assets}</div>
-            <div>{account.payments}</div>
+            <div>{addComma(account.assets)}원</div>
+            <div>{addComma(account.payments)}원</div>
             {account.is_active ? <div>활성화</div> : <div>비활성화</div>}
-            <div>{account.created_at}</div>
+            <div>{handleDate(account.created_at)}</div>
           </li>
         );
       })}

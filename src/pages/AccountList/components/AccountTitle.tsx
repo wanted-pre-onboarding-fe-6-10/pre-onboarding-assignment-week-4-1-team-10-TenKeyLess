@@ -1,7 +1,6 @@
 const AccountTitle = () => {
   return (
-    <div className="grid grid-cols-10 gap-4 text-center w-10/12">
-      <div>No.</div>
+    <div className="m-auto grid grid-cols-9 gap-4 text-center w-10/12 py-3 bg-gray-100">
       <div>고객명</div>
       <div>브로커명</div>
       <div>계좌번호</div>
