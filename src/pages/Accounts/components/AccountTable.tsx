@@ -155,7 +155,7 @@ const AccountTable = () => {
                         {brokers[account.broker_id]}
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
-                        {masking(account.number)}
+                        <Link to={`/account/${account.id}`}>{masking(account.number)}</Link>
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
                         {accountsStatus[account.status]}

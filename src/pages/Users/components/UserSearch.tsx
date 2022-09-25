@@ -2,7 +2,6 @@ import { userListAtom } from 'src/atoms';
 import { useRecoilState } from 'recoil';
 import useMutation from 'hooks/useMutation';
 import { useEffect, useState } from 'react';
-import { RecordWithTtl } from 'dns';
 import SearchBar from 'components/common/SearchBar';
 
 const UserSearch = () => {
