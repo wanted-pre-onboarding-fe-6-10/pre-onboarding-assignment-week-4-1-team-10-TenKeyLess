@@ -38,17 +38,33 @@ const LoginInput = () => {
   };
 
   return (
-    <form>
+    <form className="w-1/4">
       <div>{errorMessage}</div>
-      <label>
-        email1
-        <input type="email" name="email" onChange={handleInputChange} />
+      <label className="block w-full mb-2 text-mg font-medium text-gray-900 mx-2 my-10">
+        E-mail
+        <input
+          className="block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg min-w-full focus:ring-blue-500 h-11 p-2 my-1"
+          type="email"
+          name="email"
+          placeholder="email@sample.com"
+          onChange={handleInputChange}
+        />
       </label>
-      <label>
-        password
-        <input type="password" name="password" onChange={handleInputChange} />
+      <label className="block mb-2 w-full text-md font-medium text-gray-900 mx-2 my-10">
+        Password
+        <input
+          className="block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg min-w-full focus:ring-blue-500 h-11 p-2 my-1"
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력해 주세요."
+          onChange={handleInputChange}
+        />
       </label>
-      <button disabled={!isValid} onClick={handleLogin}>
+      <button
+        className="block w-full h-11 mx-2 my-10 bg-blue-300 rounded-lg text-md font-medium hover:bg-blue-400 cursor-pointer disabled:bg-gray-500"
+        disabled={!isValid}
+        onClick={handleLogin}
+      >
         로그인
       </button>
     </form>

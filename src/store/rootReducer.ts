@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
 import accountSlice from './services/accountSlice';
 import authSlice from './services/authSlice';
-import pageSlice from './services/pageSlice';
+import paramSlice from './services/paramSlice';
+import settingSlice from './services/settingSlice';
 import userSlice from './services/userSlice';
 
 const rootReducer = combineReducers({
   auth: authSlice,
   account: accountSlice,
   user: userSlice,
-  page: pageSlice,
+  param: paramSlice,
+  setting: settingSlice,
 });
 
 export type ReducerType = ReturnType<typeof rootReducer>;

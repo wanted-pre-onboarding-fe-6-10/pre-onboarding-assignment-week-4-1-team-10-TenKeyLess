@@ -6,6 +6,11 @@ export const getUserService = async (params?: Params) => {
   return response;
 };
 
+export const getUserSettingService = async (params?: Params) => {
+  const response = await instance.get('/userSetting', { params: params });
+  return response;
+};
+
 export const postUserService = async (user: User) => {
   const response = await instance.post('/users', user);
   return response;

@@ -1,5 +1,5 @@
 const LoginTitle = () => {
-  return <div>title</div>;
+  return <div className="text-2xl">PREFACE</div>;
 };
 
 export default LoginTitle;

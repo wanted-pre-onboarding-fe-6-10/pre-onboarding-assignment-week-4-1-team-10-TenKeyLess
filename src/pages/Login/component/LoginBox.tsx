@@ -3,7 +3,7 @@ import LoginTitle from './LoginTitle';
 
 const LoginBox = () => {
   return (
-    <div>
+    <div className="mt-5 flex flex-col items-center">
       <LoginTitle />
       <LoginInput />
     </div>
