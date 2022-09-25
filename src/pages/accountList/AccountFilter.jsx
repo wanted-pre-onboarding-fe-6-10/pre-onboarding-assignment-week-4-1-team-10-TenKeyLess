@@ -7,10 +7,6 @@ import makeFilterData from '../../utils/makeFilterData';
 import { useDispatch } from 'react-redux';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
-const BrokerArr = makeFilterData(BROKERS);
-const StatusArr = makeFilterData(ACCOUNT_STATUS);
-const ActiveArr = makeFilterData({ true: 'on', false: 'off' });
-
 const AccountFilter = ({ COUNT_PER_PAGE }) => {
   const [putData, setPutData] = useState({
     _page: 1,
@@ -51,7 +47,7 @@ const AccountFilter = ({ COUNT_PER_PAGE }) => {
 
       <MakeInput
         id="q"
-        label="전체 검색"
+        label="계좌명 검색"
         value={putData.q}
         onChange={value => setPutData(prev => ({ ...prev, q: value }))}
       />
@@ -59,7 +55,6 @@ const AccountFilter = ({ COUNT_PER_PAGE }) => {
         <button
           className="mr-10 ml-[-5rem]"
           onClick={() => {
-            // 1. 필터 검색 값만 초기화 > 이휴 검색버튼 눌러야 전체 api 호출되는 것임.
             setPutData({
               _page: 1,
               _limit: COUNT_PER_PAGE,
@@ -74,13 +69,12 @@ const AccountFilter = ({ COUNT_PER_PAGE }) => {
         </button>
         <button
           onClick={() => {
-            // 🙏🏻1. url 주소 변경
             navigate({
               pathname: '/accounts',
               search: `${createSearchParams(putData)}`,
             });
-            // 🙏🏻 2. api 호출
-            dispatch(getAccountsRequest()); // get api - 필터된 데이터 10개씩 요청
+
+            dispatch(getAccountsRequest());
           }}
         >
           검색
@@ -91,3 +85,7 @@ const AccountFilter = ({ COUNT_PER_PAGE }) => {
 };
 
 export default AccountFilter;
+
+const BrokerArr = makeFilterData(BROKERS);
+const StatusArr = makeFilterData(ACCOUNT_STATUS);
+const ActiveArr = makeFilterData({ true: 'on', false: 'off' });

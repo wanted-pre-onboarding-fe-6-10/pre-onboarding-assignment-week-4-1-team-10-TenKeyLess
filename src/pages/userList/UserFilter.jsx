@@ -6,9 +6,6 @@ import makeFilterData from '../../utils/makeFilterData';
 import MakeSelectBox from '../../components/MakeSelectBox';
 import MakeInput from '../../components/MakeInput';
 
-const ActiveArr = makeFilterData({ true: 'on', false: 'off' });
-const StaffArr = makeFilterData({ true: '임직원', false: '일반인' });
-
 const UserFilter = ({ COUNT_PER_PAGE }) => {
   const [putData, setPutData] = useState({
     _page: 1,
@@ -21,10 +18,8 @@ const UserFilter = ({ COUNT_PER_PAGE }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(putData);
-
   return (
-    <div className="grid grid-flow-col justify-items-center place-items-center h-24 mb-5 px-10  border-zinc-900 border-2">
+    <div className="grid grid-flow-col justify-items-center place-items-center h-24 mb-2 px-10  border-zinc-900 border-2">
       <MakeSelectBox
         list={ActiveArr}
         value={putData.is_active}
@@ -51,7 +46,6 @@ const UserFilter = ({ COUNT_PER_PAGE }) => {
         <button
           className="mr-10 ml-[-5rem]"
           onClick={() => {
-            // 1. 필터 검색 값만 초기화 > 이휴 검색버튼 눌러야 전체 api 호출되는 것임.
             setPutData({
               _page: 1,
               _limit: COUNT_PER_PAGE,
@@ -66,13 +60,12 @@ const UserFilter = ({ COUNT_PER_PAGE }) => {
         </button>
         <button
           onClick={() => {
-            // 🙏🏻1. url 주소 변경
             navigate({
               pathname: '/users',
               search: `${createSearchParams(putData)}`,
             });
-            // 🙏🏻 2. api 호출
-            dispatch(getUsersRequest()); // get api - 필터된 데이터 10개씩 요청
+
+            dispatch(getUsersRequest());
           }}
         >
           검색
@@ -83,3 +76,6 @@ const UserFilter = ({ COUNT_PER_PAGE }) => {
 };
 
 export default UserFilter;
+
+const ActiveArr = makeFilterData({ true: 'on', false: 'off' });
+const StaffArr = makeFilterData({ true: '직원', false: '일반인' });

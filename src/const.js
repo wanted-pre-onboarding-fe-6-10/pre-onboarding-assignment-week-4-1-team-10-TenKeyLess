@@ -110,5 +110,6 @@ export const accountFilterDataForm = {
   is_active: '',
   q: '',
 };
-
 export const usersDataForm = { _page: 0, _limit: 0, is_staff: '', is_active: '', q: '' };
+
+export const usersFilterDataForm = { is_staff: '', is_active: '', q: '' };

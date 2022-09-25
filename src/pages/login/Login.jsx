@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { postLoginRequest } from '../../store/userNameSlice';
 import { useDispatch } from 'react-redux';
@@ -8,21 +7,23 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  /*
   // <회원가입>
-  // useEffect(() => {
-  //   fetch('http://localhost:4000/users/signup', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       email: 'admin@admin.com',
-  //       password: 'admin123!',
-  //     }),
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => console.log(result));
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:4000/users/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: 'admin@admin.com',
+        password: 'admin123!',
+      }),
+    })
+      .then(res => res.json())
+      .then(result => console.log(result));
+  }, []);
+  */
 
   const {
     register,
@@ -41,13 +42,13 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-sky-300 w-full h-screen flex flex-col items-center">
+    <div className="w-full h-screen flex flex-col items-center bg-slate-300 ">
       <h1 className="text-4xl mt-32 mb-10">December &amp; Company</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col border-[1px] border-black w-7/12"
+        className="flex flex-col items-center pt-16 border-[1px] border-black w-2/5 h-2/5 bg-gray-200 "
       >
-        <label className="py-3">
+        <label className="py-3 w-full ml-20">
           <p className="w-10">Email</p>
           <input
             className="w-5/6 p-2 rounded-md"
@@ -61,7 +62,7 @@ const Login = () => {
         </label>
         {errors.email && <p className="text-red-400">이메일을 입력하세요.</p>}
 
-        <label>
+        <label className="py-3 w-full ml-20">
           <p>password</p>
           <input
             className="w-5/6 p-2 rounded-md"
@@ -86,7 +87,7 @@ const Login = () => {
           <p className="boreder-2 text-red-900"> 영문 , 숫자, 특수문자 최소 1개 이상 포함</p>
         )}
 
-        <button type="submit" className="boreder-2 my-10">
+        <button type="submit" className="boreder-2 bg-blue-400 w-4/6 rounded-md p-4 my-10">
           로그인
         </button>
       </form>
@@ -98,6 +99,5 @@ export default Login;
 
 const pwIsValid = txt => {
   const reg = new RegExp(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/);
-  // const reg = new RegExp(/^(?=.*[a-zA-z]).{8,}$/);
   return reg.test(txt) ? true : false;
 };

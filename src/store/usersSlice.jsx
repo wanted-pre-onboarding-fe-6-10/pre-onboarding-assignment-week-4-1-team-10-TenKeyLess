@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { usersRequest } from '../api/axios';
+import { usersRequest, nameModifyRequest, userDeleteRequest } from '../api/axios';
 import { usersDataForm } from '../const';
 
 export const getUsersRequest = createAsyncThunk('GET_USERS', async (_, thunkApi) => {
   const queryParams = new URLSearchParams(window.location.search);
-  let pageNationData = ''; // &_page=1&_limit=10
+  let pageNationData = '';
 
   Object.entries(usersDataForm).forEach(data => {
     const key = data[0];
@@ -18,13 +18,28 @@ export const getUsersRequest = createAsyncThunk('GET_USERS', async (_, thunkApi)
       }
     }
   });
-  console.log(pageNationData);
 
   try {
     return await usersRequest(pageNationData).then(response => ({
       totalCount: response.headers['x-total-count'],
       data: response.data,
     }));
+  } catch {
+    return thunkApi.rejectWithValue('err');
+  }
+});
+
+export const patchNameRequest = createAsyncThunk('PATCH_NAME', async (modifyData, thunkApi) => {
+  try {
+    return await nameModifyRequest(modifyData).then(response => response.data);
+  } catch {
+    return thunkApi.rejectWithValue('err');
+  }
+});
+
+export const deleteRequest = createAsyncThunk('DELETE_USER', async (id, thunkApi) => {
+  try {
+    return await userDeleteRequest(id).then(response => id);
   } catch {
     return thunkApi.rejectWithValue('err');
   }
@@ -38,9 +53,19 @@ export const usersSlice = createSlice({
   reducers: {},
 
   extraReducers: builder => {
-    // 3. reducer로 action캐치함
     builder.addCase(getUsersRequest.fulfilled, (state, action) => {
-      return { ...state, users: action.payload, totalCount: action.payload.totalCount };
+      return { ...state, users: action.payload.data, totalCount: +action.payload.totalCount - 1 };
+    });
+
+    // [TODO] action.payload의 값에는 accounts 배열이 없음. 그래서 state값을 어떻게 update 해야할지 모르겟음
+    builder.addCase(patchNameRequest.fulfilled, (state, action) => {});
+
+    // [TODO] action.payload의 값에는 accounts 배열이 없음. 그래서 state값을 어떻게 update 해야할지 모르겟음
+    builder.addCase(deleteRequest.fulfilled, (state, action) => {});
+
+    builder.addCase(getUsersRequest.rejected, state => {
+      alert('user 데이터 요청 오류');
+      return state;
     });
   },
 });

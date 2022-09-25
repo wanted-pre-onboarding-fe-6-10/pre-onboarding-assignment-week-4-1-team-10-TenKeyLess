@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAccountsRequest } from '../store/accountSlice';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout } from 'antd';
 import { SIDER } from '../const';
@@ -10,7 +9,6 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const HeaderLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const userName = useSelector(state => state.userName.userName);
@@ -74,7 +72,7 @@ const HeaderLayout = ({ children }) => {
           </div>
         </Header>
 
-        <Content className="bg-slate-200 pt-5 px-5">
+        <Content className="bg-slate-200 pt-5 px-3">
           <div>{children}</div>
         </Content>
         <Footer className="w-full fixed bottom-0 py-4 pl-0 pr-14 flex justify-center bg-sky-700">

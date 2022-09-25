@@ -1,17 +1,14 @@
-export const userNameMasking = text => {
-  const nameArr = text.split(' ');
-
-  if (nameArr.length === 2) {
-    return `* ${nameArr[nameArr.length - 1]}`;
+export const userNameMasking = function (text) {
+  if (text.length > 2) {
+    let originName = text.split('');
+    originName.forEach(function (_, i) {
+      if (i === 0 || i === originName.length - 1) return;
+      originName[i] = '*';
+    });
+    let joinName = originName.join();
+    return joinName.replace(/,/g, '');
+  } else {
+    let pattern = /^./;
+    return text.replace(pattern, '*');
   }
-
-  if (nameArr.length === 3) {
-    return `${nameArr[0]} * ${nameArr[nameArr.length - 1]}`;
-  }
-
-  if (nameArr.length === 4) {
-    return `${nameArr[0]} * * ${nameArr[nameArr.length - 1]}`;
-  }
-
-  return nameArr;
 };

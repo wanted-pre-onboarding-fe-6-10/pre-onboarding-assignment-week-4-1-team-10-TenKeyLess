@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccountsRequest } from '../../store/accountSlice';
 import { BROKERS, ACCOUNT_STATUS, accountFilterDataForm } from '../../const';
@@ -8,7 +7,6 @@ import AccountFilter from './AccountFilter';
 import 'antd/dist/antd.css';
 import { Table, Pagination } from 'antd';
 
-// < 컴포넌트 시작 >
 const AccountList = () => {
   const { accounts, totalCount } = useSelector(state => state.accounts);
   const [current, setCurrent] = useState(1);
@@ -18,8 +16,7 @@ const AccountList = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    let pageNationData = {}; // &_page=1&_limit=10 제외한 그 뒤에 필터조건 쿼리
-
+    let pageNationData = {};
     Object.entries(accountFilterDataForm).forEach(data => {
       const key = data[0];
       const value = queryParams.get(key);
@@ -29,8 +26,6 @@ const AccountList = () => {
       }
     });
 
-    // 1. 라우터 변경하고
-    // 페이지네이션 버튼 클릭시 "_page=3&_limit=10" 쿼리만 변경 <- 필터조건은 유지되야 함
     navigate({
       pathname: '/accounts',
       search: `${createSearchParams({
@@ -38,11 +33,9 @@ const AccountList = () => {
         _limit: COUNT_PER_PAGE,
         ...pageNationData,
       })}`,
-      // 🥝 page번호만 바뀌고, 필터된 데이터가 뒤에 쿼리로 고정되야 함.
     });
 
-    // 2. api호출 > store 업데이트
-    dispatch(getAccountsRequest()); //  get api - 10개만 get요청
+    dispatch(getAccountsRequest());
   }, [current, dispatch, navigate]);
 
   const onPageChange = pageNum => {
@@ -75,7 +68,7 @@ const AccountList = () => {
 
 export default AccountList;
 
-// < 상수데이터 >
+// 상수데이터
 const COUNT_PER_PAGE = 10;
 
 const makeTableData = DATA => {
@@ -84,16 +77,16 @@ const makeTableData = DATA => {
   for (let i = 0; i < DATA.length; i += 1) {
     const rate = (((+DATA[i].assets - +DATA[i].payments) / +DATA[i].payments) * 100)
       .toString()
-      .slice(0, 5); // slice(0,7)
+      .slice(0, 5);
 
     tableData.push({
       key: DATA[i].uuid,
       id: DATA[i].id,
       broker: BROKERS[DATA[i].broker_id],
       userId: DATA[i].userId,
-      userName: `${DATA[i].user.name}`, //  사용자 상세로 이동 - userId로 user detail 검색하기
+      userName: `${DATA[i].user.name}`,
       acountName: DATA[i].name,
-      accountNum: DATA[i].number, // [TODO]앞 뒤 두글자 제외하고 다 *마스킹 처리 ,
+      accountNum: DATA[i].number,
       assets: Math.floor(+DATA[i].assets).toLocaleString(),
       payments: Math.floor(+DATA[i].payments).toLocaleString(),
       createdAt: DATA[i].created_at,
@@ -114,7 +107,7 @@ const columns = [
   {
     title: '고객명',
     dataIndex: 'userName',
-    render: (text, record) => <a href={`/user-detail/${record.userId}`}>{text}</a>,
+    render: (text, record) => <a href={`/users/${record.userId}`}>{text}</a>,
   },
   {
     title: '계좌명',
@@ -124,7 +117,7 @@ const columns = [
   {
     title: '계좌번호',
     dataIndex: 'accountNum',
-    render: (text, record) => <a href={`/account-detail/${record.key}`}>{text}</a>, // uuid로 계좌디테일 페이지 이동
+    render: (text, record) => <a href={`/accounts/${record.key}`}>{text}</a>, // uuid로 계좌디테일 페이지 이동
   },
   {
     title: '평가금액',
@@ -137,7 +130,7 @@ const columns = [
   {
     title: '수익률',
     dataIndex: 'returnRate',
-    render: text => rateColor(text),
+    render: text => <div className={`${+text > 0 ? 'text-sky-600' : 'text-red-700'}`}>{text}%</div>,
   },
   {
     title: '계좌개설일',
@@ -154,7 +147,3 @@ const columns = [
     align: 'center',
   },
 ];
-
-const rateColor = text => {
-  return <div className={`${+text > 0 ? 'text-sky-600' : 'text-red-700'}`}>{text}%</div>;
-};

@@ -2,33 +2,61 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersRequest } from '../../store/usersSlice';
-import { BROKERS, ACCOUNT_STATUS, filterDataForm } from '../../const';
-import { userNameMasking } from '../../utils/masking';
+import { usersFilterDataForm } from '../../const';
 import UserFilter from './UserFilter';
-
+import ModalLayout from '../../components/ModalLayout';
 import 'antd/dist/antd.css';
 import { Table, Pagination } from 'antd';
+import { ModifyUserName, DeleteButton } from './MakeTableCell';
 
 const UserList = () => {
+  const [current, setCurrent] = useState(1);
+
+  const onPageChange = pageNum => {
+    setCurrent(pageNum);
+  };
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    users: { data },
-    users: { totalCount },
-  } = useSelector(state => state.users);
+  const { users, totalCount } = useSelector(state => state.users);
 
   useEffect(() => {
-    dispatch(getUsersRequest());
-  }, []);
+    const queryParams = new URLSearchParams(window.location.search);
+    let pageNationData = {};
 
-  console.log(data);
+    Object.entries(usersFilterDataForm).forEach(_ => {
+      const key = users[0];
+      const value = queryParams.get(key);
+
+      if (value !== '' && value !== null) {
+        pageNationData[key] = value;
+      }
+    });
+
+    navigate({
+      pathname: '/users',
+      search: `${createSearchParams({
+        _page: current,
+        _limit: COUNT_PER_PAGE,
+        ...pageNationData,
+      })}`,
+    });
+
+    dispatch(getUsersRequest());
+  }, [current, dispatch, navigate, users]);
 
   return (
     <div>
       <UserFilter COUNT_PER_PAGE={COUNT_PER_PAGE} />
 
+      <ModalLayout btnText="사용자 추가" title="신규 사용자 추가">
+        {/* [TODO] */}
+        <div>신규 사용자 추가</div>
+      </ModalLayout>
+
       <Table
         columns={columns}
-        dataSource={makeTableData(data)}
+        dataSource={makeTableData(users)}
         pagination={{
           total: 10,
           pageSize: 10,
@@ -36,13 +64,13 @@ const UserList = () => {
         }}
       />
 
-      {/* <Pagination
-        className="mt-6 flex justify-center"
+      <Pagination
+        className="mt-3 flex justify-center"
         current={current}
         onChange={onPageChange}
         total={totalCount}
         showSizeChanger={false}
-      /> */}
+      />
     </div>
   );
 };
@@ -57,10 +85,10 @@ const makeTableData = data => {
   }
 
   for (let i = 0; i < data.length; i += 1) {
-    console.log(typeof data[i].setting.is_active);
     tableData.push({
       id: data[i].id,
       key: data[i].id,
+      deleteButton: data[i].id,
       userName: data[i].name,
       gender: data[i].gender_origin,
       birthDate: data[i].birth_date,
@@ -69,7 +97,7 @@ const makeTableData = data => {
       createdAt: data[i].created_at,
       lastLogin: data[i].last_login,
       allowMarketing: data[i].setting.allow_marketing_push,
-      // isStaff: data[i].setting.is_staff, // 🍒
+      isStaff: data[i].setting.is_staff,
       isActive: data[i].setting.is_active,
       accountNum: data[i].accounts.length,
     });
@@ -80,19 +108,24 @@ const makeTableData = data => {
 
 const columns = [
   {
+    title: '',
+    dataIndex: 'deleteButton',
+    render: text => {
+      return <DeleteButton id={text} />;
+    },
+  },
+  {
     title: '고객명',
     dataIndex: 'userName',
-    render: (text, record) => (
-      <a href={`/user-detail/${record.id}`}>{`${userNameMasking(text)} - ${record.id}`}</a>
-      // [TODO] id 지우기
-    ),
+    render: (text, record) => <ModifyUserName text={text} record={record} />,
   },
-  // 🍒
-  // {
-  //   title: '임직원여부',
-  //   dataIndex: 'staff',
-  //   render: text => <div>{`${Boolean(text) ? '임직원' : '일반인'}`}</div>,
-  // },
+  {
+    title: '임직원여부',
+    dataIndex: 'staff',
+    render: (_, record) => {
+      return <div>{`${record.isStaff ? '직원' : '일반인'}`}</div>;
+    },
+  },
   {
     title: '성별',
     dataIndex: 'gender',
@@ -101,7 +134,7 @@ const columns = [
   {
     title: '생년월일',
     dataIndex: 'birthDate',
-    render: text => <div>{`${text.slice(0, 10)}`}</div>, // yyyy-mm-dd
+    render: text => <div>{`${text.slice(0, 10)}`}</div>,
   },
   {
     title: '휴대폰 번호',
@@ -133,7 +166,6 @@ const columns = [
     dataIndeX: 'isActive',
     align: 'center',
     render: text => {
-      console.log(text); // 객체가 나오는데 이건 버그???
       return <div>{`${text.isActive ? 'on' : 'off'}`}</div>;
     },
   },
