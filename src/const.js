@@ -59,7 +59,6 @@ export const BROKERS = {
   271: '토스증권',
 };
 
-// 계좌 형식
 export const BROKER_FORMAT = {
   209: '00-00000000-00',
   218: '00-0000000-000',
@@ -95,3 +94,22 @@ export const ACCOUNT_STATUS = {
   3: '투자중지',
   4: '해지',
 };
+
+export const accountsDataForm = {
+  _page: 0,
+  _limit: 0,
+  broker_id: '',
+  status: '',
+  is_active: '',
+  q: '',
+};
+
+export const accountFilterDataForm = {
+  broker_id: '',
+  status: '',
+  is_active: '',
+  q: '',
+};
+export const usersDataForm = { _page: 0, _limit: 0, is_staff: '', is_active: '', q: '' };
+
+export const usersFilterDataForm = { is_staff: '', is_active: '', q: '' };

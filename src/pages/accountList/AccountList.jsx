@@ -1,40 +1,51 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsRequest, getFullAccountRequest } from '../../store/accountSlice';
-import { getUserDetailRequest } from '../../store/userDetailSlice';
-import { BROKERS, BROKER_FORMAT, ACCOUNT_STATUS } from '../../const';
-
+import { getAccountsRequest } from '../../store/accountSlice';
+import { BROKERS, ACCOUNT_STATUS, accountFilterDataForm } from '../../const';
+import AccountFilter from './AccountFilter';
 import 'antd/dist/antd.css';
-import { Table, Pagination, Button } from 'antd';
-import { EditOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Table, Pagination } from 'antd';
 
-// < 컴포넌트 시작 >
 const AccountList = () => {
-  // const { page } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { accounts, totalCount } = useSelector(state => state.accounts);
-  // const { userDetails } = useSelector(state => state.userDetails);
-  // console.log('userDetails', userDetails);
-  console.log(accounts);
-
   const [current, setCurrent] = useState(1);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getFullAccountRequest({ currentPage: '', count: '' })); // 전체 get
-    dispatch(getAccountsRequest({ currentPage: current, count: COUNT_PER_PAGE })); // 1페이지에 10개씩 get
-    dispatch(getUserDetailRequest());
-    navigate(`/accounts/${current}`);
+    const queryParams = new URLSearchParams(window.location.search);
+    let pageNationData = {};
+    Object.entries(accountFilterDataForm).forEach(data => {
+      const key = data[0];
+      const value = queryParams.get(key);
+
+      if (value !== '' && value !== null) {
+        pageNationData[key] = value;
+      }
+    });
+
+    navigate({
+      pathname: '/accounts',
+      search: `${createSearchParams({
+        _page: current,
+        _limit: COUNT_PER_PAGE,
+        ...pageNationData,
+      })}`,
+    });
+
+    dispatch(getAccountsRequest());
   }, [current, dispatch, navigate]);
 
-  const onChange = pageNum => {
+  const onPageChange = pageNum => {
     setCurrent(pageNum);
   };
 
   return (
     <div>
-      <div className="h-24 mb-10 border-zinc-900 border-2">filter</div>
+      <AccountFilter COUNT_PER_PAGE={COUNT_PER_PAGE} />
+
       <Table
         columns={columns}
         dataSource={makeTableData(accounts)}
@@ -45,8 +56,9 @@ const AccountList = () => {
         }}
       />
       <Pagination
+        className="mt-6 flex justify-center"
         current={current}
-        onChange={onChange}
+        onChange={onPageChange}
         total={totalCount}
         showSizeChanger={false}
       />
@@ -56,28 +68,31 @@ const AccountList = () => {
 
 export default AccountList;
 
-// < 상수데이터 >
+// 상수데이터
 const COUNT_PER_PAGE = 10;
 
 const makeTableData = DATA => {
   const tableData = [];
 
   for (let i = 0; i < DATA.length; i += 1) {
-    // const maskingAccount = DATA[i].number;
+    const rate = (((+DATA[i].assets - +DATA[i].payments) / +DATA[i].payments) * 100)
+      .toString()
+      .slice(0, 5);
 
     tableData.push({
       key: DATA[i].uuid,
       id: DATA[i].id,
       broker: BROKERS[DATA[i].broker_id],
       userId: DATA[i].userId,
-      userName: `${DATA[i].user.name}`, //  사용자 상세로 이동 - userId로 user detail 검색하기
+      userName: `${DATA[i].user.name}`,
       acountName: DATA[i].name,
-      accountNum: DATA[i].number, // [TODO]앞 뒤 두글자 제외하고 다 *마스킹 처리 ,
+      accountNum: DATA[i].number,
       assets: Math.floor(+DATA[i].assets).toLocaleString(),
       payments: Math.floor(+DATA[i].payments).toLocaleString(),
       createdAt: DATA[i].created_at,
       status: ACCOUNT_STATUS[DATA[i].status],
-      isActive: DATA[i].isActive ? 'on' : 'off',
+      isActive: DATA[i].is_active ? 'on' : 'off',
+      returnRate: `${rate}`,
     });
   }
 
@@ -92,17 +107,17 @@ const columns = [
   {
     title: '고객명',
     dataIndex: 'userName',
-    render: (text, record) => <a href={`/user-detail/${record.userId}`}>{text}</a>,
+    render: (text, record) => <a href={`/users/${record.userId}`}>{text}</a>,
   },
   {
     title: '계좌명',
     dataIndex: 'acountName',
-    render: (text, record) => <AccountName text={text} record={record} />,
+    render: text => <div>{text}</div>,
   },
   {
     title: '계좌번호',
     dataIndex: 'accountNum',
-    render: (text, record) => <a href={`/account-detail/${record.key}`}>{text}</a>,
+    render: (text, record) => <a href={`/accounts/${record.key}`}>{text}</a>, // uuid로 계좌디테일 페이지 이동
   },
   {
     title: '평가금액',
@@ -113,8 +128,14 @@ const columns = [
     dataIndex: 'payments',
   },
   {
+    title: '수익률',
+    dataIndex: 'returnRate',
+    render: text => <div className={`${+text > 0 ? 'text-sky-600' : 'text-red-700'}`}>{text}%</div>,
+  },
+  {
     title: '계좌개설일',
     dataIndex: 'createdAt',
+    render: text => <div>{`${new Date(text).toLocaleString()}`}</div>,
   },
   {
     title: '계좌상태',
@@ -126,44 +147,3 @@ const columns = [
     align: 'center',
   },
 ];
-
-// [TODO]컴포넌트 분리
-const AccountName = ({ text, record }) => {
-  let [isDisable, setIsDisable] = useState(true);
-  const [nameValue, setNameValue] = useState(text);
-
-  const accountInputEL = useRef();
-
-  return (
-    <div className="flex mr-[-3rem]">
-      <input
-        type="text"
-        value={nameValue}
-        ref={accountInputEL}
-        disabled={isDisable}
-        onChange={e => setNameValue(e.target.value)}
-        className={`w-30 mr-3 pl-2 ${isDisable ? 'bg-inherit' : 'bg-lime-200'}`}
-      />
-      <button
-        type="button"
-        className="pr-5"
-        onClick={() => {
-          setIsDisable(false);
-          accountInputEL.current.focus();
-        }}
-      >
-        <EditOutlined className="text-rose-400" />
-      </button>
-      <button
-        type="button"
-        className="pr-5"
-        onClick={() => {
-          setIsDisable(true);
-          // [TODO] put api처리 (nameValue)
-        }}
-      >
-        <CheckCircleOutlined className="text-green-500" />
-      </button>
-    </div>
-  );
-};
