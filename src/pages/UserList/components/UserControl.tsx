@@ -1,13 +1,13 @@
 import SearchForm from '../../../components/searchform/SearchForm';
-import AccountFilters from './AccountFilters';
+import UserFilter from './UserFilter';
 
-const AccountControl = () => {
+const UserControl = () => {
   return (
     <div className="flex justify-between w-10/12 m-auto my-3">
       <SearchForm />
-      <AccountFilters />
+      <UserFilter />
     </div>
   );
 };
 
-export default AccountControl;
+export default UserControl;
