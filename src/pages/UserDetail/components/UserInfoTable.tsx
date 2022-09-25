@@ -2,6 +2,7 @@ import useMutation from 'hooks/useMutation';
 import { User } from 'pages/Accounts/Accounts';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { maskingPhoneNumber } from 'utils/utils';
 
 export interface UserSetting {
   id: number;
@@ -153,7 +154,7 @@ const UserInfoTable = ({ user, userSetting, dataLength }: UserProps) => {
                 휴대폰 번호
               </div>
               <div className="p-4 flex items-center w-[65%] border-2 border-gray-300  bg-white">
-                {userData.phone_number}
+                {maskingPhoneNumber(userData.phone_number)}
               </div>
             </div>
           </div>

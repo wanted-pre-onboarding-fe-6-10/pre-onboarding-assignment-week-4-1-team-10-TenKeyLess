@@ -1,11 +1,11 @@
-import FilterBar from 'components/common/FilterBar';
+import FilterBar from 'pages/Accounts/components/AccountFilter';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { accountListAtom } from 'src/atoms';
 import { accountsStatus, brokers } from 'utils/constant';
 import { makeComma } from 'utils/utils';
-import { masking } from 'utils/utils';
+import { maskingAccountNumber } from 'utils/utils';
 import { Account } from '../Accounts';
 import AccountSearch from './AccountSearch';
 
@@ -154,8 +154,10 @@ const AccountTable = () => {
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
                         {brokers[account.broker_id]}
                       </td>
-                      <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
-                        <Link to={`/account/${account.id}`}>{masking(account.number)}</Link>
+                      <td className="px-5 py-4 text-sm text-sky-500 whitespace-nowrap text-center">
+                        <Link to={`/account/${account.id}`}>
+                          {maskingAccountNumber(account.number)}
+                        </Link>
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
                         {accountsStatus[account.status]}

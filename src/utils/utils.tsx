@@ -4,10 +4,23 @@ export const makeComma = (number: string) => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-export const masking = (number: string) => {
+export const maskingAccountNumber = (number: string) => {
   let originNumber = number.split('');
   originNumber.forEach((n, i) => {
     if (i === 0 || i === originNumber.length - 1) return;
+    originNumber[i] = '*';
+  });
+  return originNumber;
+};
+
+export const maskingPhoneNumber = (number: string) => {
+  console.log(number);
+  console.log(typeof number);
+  let originNumber = number.split('');
+  originNumber.forEach((n, i) => {
+    let tmp = 6;
+    if (number.slice(0, 3).includes('010')) tmp = 7;
+    if (i < 4 || i > tmp) return;
     originNumber[i] = '*';
   });
   return originNumber;

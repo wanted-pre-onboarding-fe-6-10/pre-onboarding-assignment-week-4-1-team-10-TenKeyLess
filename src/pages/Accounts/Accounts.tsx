@@ -65,7 +65,7 @@ const Accounts = () => {
   }, [data]);
   return (
     <div className="px-32 pb-16 w-full bg-gray-100">
-      {loading && accounts.length === 0 ? (
+      {loading || accounts.length === 0 ? (
         <div>Loading</div>
       ) : (
         <div>
