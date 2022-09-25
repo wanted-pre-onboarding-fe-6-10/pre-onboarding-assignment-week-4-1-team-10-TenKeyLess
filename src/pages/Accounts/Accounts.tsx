@@ -67,13 +67,14 @@ const Accounts = () => {
       setAccounts(data);
     }
   }, [data]);
+
   useEffect(() => {
     if (data === 'jwt expired') {
       setUserInfo({ accessToken: '', email: '' });
       alert('로그인 유효 기간이 만료됐습니다. 다시 로그인 해주세요.');
       navigate('/');
     }
-  }, []);
+  }, [data]);
   return (
     <div className="px-32 pb-16 w-full bg-gray-100">
       {loading || accounts.length === 0 ? (

@@ -35,8 +35,7 @@ const Login = () => {
       navigate('/accounts');
     }
   }, [userInfo]);
-  console.log(data);
-  console.log(userInfo);
+
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen pb-16">
       <div className="flex items-center justify-center w-full mb-8">

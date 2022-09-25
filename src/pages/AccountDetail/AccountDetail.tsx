@@ -23,7 +23,7 @@ const AccountDetail = () => {
       navigate('/');
     }
   }, [data]);
-  console.log(data);
+
   return (
     <div className="flex flex-col">
       {loading ? (
