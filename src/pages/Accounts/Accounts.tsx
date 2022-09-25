@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { accountListAtom } from './../../atoms';
 import AccountTable from './components/AccountTable';
 import { Pagination } from './components/Pagination';
+import { userInfoAtom } from 'src/atoms';
+import { useNavigate } from 'react-router-dom';
 
 export interface User {
   id: number;
@@ -39,6 +41,8 @@ export interface Account {
 }
 
 const Accounts = () => {
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [accounts, setAccounts] = useRecoilState(accountListAtom);
   const [page, setPage] = useState(1);
   const [getAccounts, { data, loading }] = useMutation<any>(
@@ -63,6 +67,13 @@ const Accounts = () => {
       setAccounts(data);
     }
   }, [data]);
+  useEffect(() => {
+    if (data === 'jwt expired') {
+      setUserInfo({ accessToken: '', email: '' });
+      alert('로그인 유효 기간이 만료됐습니다. 다시 로그인 해주세요.');
+      navigate('/');
+    }
+  }, []);
   return (
     <div className="px-32 pb-16 w-full bg-gray-100">
       {loading || accounts.length === 0 ? (
