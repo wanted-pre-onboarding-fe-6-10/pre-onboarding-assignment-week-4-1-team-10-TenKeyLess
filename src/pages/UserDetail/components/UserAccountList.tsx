@@ -1,7 +1,7 @@
 import { Account } from 'pages/Accounts/Accounts';
 import { Link } from 'react-router-dom';
 import { accountsStatus, brokers } from 'utils/constant';
-import { makeComma, masking } from 'utils/utils';
+import { makeComma, maskingAccountNumber } from 'utils/utils';
 
 interface DataProps {
   data: Account[];
@@ -106,7 +106,7 @@ const UserAccountList = ({ data }: DataProps) => {
                       {brokers[account.broker_id]}
                     </td>
                     <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
-                      {masking(account.number)}
+                      {maskingAccountNumber(account.number)}
                     </td>
                     <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
                       {accountsStatus[account.status]}

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { brokerList, brokers } from 'utils/constant';
 import { useRecoilState } from 'recoil';
 import { accountListAtom } from 'src/atoms';
-import { getKeyByValue } from './../../utils/utils';
+import { getKeyByValue } from '../../../utils/utils';
 import useMutation from 'hooks/useMutation';
 
 interface OpenProps {
@@ -10,7 +10,7 @@ interface OpenProps {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const FilterBar = ({ isOpen, setIsOpen }: OpenProps) => {
+const AccountFilter = ({ isOpen, setIsOpen }: OpenProps) => {
   const outside = useRef<any>();
   const [accounts, setAccounts] = useRecoilState(accountListAtom);
   const [broker, setBroker] = useState('');
@@ -170,4 +170,4 @@ const FilterBar = ({ isOpen, setIsOpen }: OpenProps) => {
   );
 };
 
-export default FilterBar;
+export default AccountFilter;

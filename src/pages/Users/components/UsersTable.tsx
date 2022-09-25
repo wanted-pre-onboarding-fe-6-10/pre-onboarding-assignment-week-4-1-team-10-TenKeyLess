@@ -1,15 +1,18 @@
+import FilterBar from 'pages/Accounts/components/AccountFilter';
 import { User } from 'pages/Accounts/Accounts';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userListAtom } from 'src/atoms';
+import { maskingPhoneNumber } from 'utils/utils';
 import UserSearch from './UserSearch';
 
 const UsersTable = () => {
   const users = useRecoilValue(userListAtom);
-  console.log(users);
+  const [openFilter, setOpenFilter] = useState(false);
   return (
     <div>
-      {users.length >= 0 ? (
+      {users ? (
         <div className="overflow-x-auto">
           <div className="flex justify-between py-3 pl-2">
             <UserSearch />
@@ -17,7 +20,7 @@ const UsersTable = () => {
               <div className="relative">
                 <button
                   className="relative z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
-                  // onClick={() => setOpenFilter(true)}
+                  onClick={() => setOpenFilter(true)}
                 >
                   <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
                     <div>
@@ -42,7 +45,7 @@ const UsersTable = () => {
               </div>
             </div>
           </div>
-          {/* {openFilter && <FilterBar isOpen={openFilter} setIsOpen={setOpenFilter} />} */}
+          {openFilter && <FilterBar isOpen={openFilter} setIsOpen={setOpenFilter} />}
 
           <div className="p-1.5 w-full inline-block align-middle">
             <div className="border rounded-lg overflow-auto">
@@ -113,7 +116,7 @@ const UsersTable = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {users.map((user: User, index: number) => (
-                    <tr key={index}>
+                    <tr key={user.id}>
                       <td className="px-5 py-4 texthsm text-sky-500 whitespace-nowrap text-center">
                         <Link to={`/user/${user.id}`} state={{ user: user }}>
                           {user.name}
@@ -130,15 +133,15 @@ const UsersTable = () => {
                         {/* {account.status} */}
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
-                        {user.birth_date}
+                        {user.birth_date.split('').slice(0, 10)}
                       </td>
                       <td
                         className={`px-5 py-4 text-sm font-semibold text-gray-800 whitespace-nowrap`}
                       >
-                        {user.phone_number}
+                        {maskingPhoneNumber(user.phone_number)}
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-right">
-                        {/* {user.last_login.split('').slice(0, 10)} */}
+                        {user.last_login.split('').slice(0, 10)}
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
                         {'혜택 수신 동의 여부'}
@@ -147,7 +150,7 @@ const UsersTable = () => {
                         {'활성화 여부'}
                       </td>
                       <td className="px-5 py-4 text-sm text-gray-800 whitespace-nowrap text-center">
-                        {/* {user.created_at.split('').slice(0, 10)} */}
+                        {user.created_at.split('').slice(0, 10)}
                       </td>
                     </tr>
                   ))}

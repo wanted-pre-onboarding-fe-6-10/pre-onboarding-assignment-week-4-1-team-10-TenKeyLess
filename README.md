@@ -1,4 +1,23 @@
-# Wanted Pre-Onboarding 6차 10팀 TenKeyLess, thingsflow 기업과제
+# Wanted Pre-Onboarding 6차 10팀 TenKeyLess, december_and_company 기업과제
+
+## 프로젝트 실행방법
+
+```
+git clone https://github.com/wanted-pre-onboarding-fe-6-10/pre-onboarding-assignment-week-4-1-team-10-TenKeyLess.git
+
+- json server 시작(json server의 _expand 속성을 활용하기 위해 server 파일 일부 수정으로 해당 폴더에서 json server 구동 필요)
+cd server
+npm install
+npm run gen
+npm start
+
+- react 프로젝트 시작
+cd ..
+yarn install
+yarn start
+
+- postman이나 기타 툴을 활용해서 http://localhost:4000/users/signup 으로 회원가입 진행 후 접속
+```
 
 ## 🌏 배포링크
 
@@ -113,7 +132,10 @@ http://wanted610.s3-website.ap-northeast-2.amazonaws.com/
 
 > ## 기능별 설명 / Best Practice
 
-### 필수 기능
+- json server의 경우 \_expand 속성을 활용하기 위해 generateData.ts 파일에서 user_id 부분을 userId로 수정
+- CORS 에러를 해결하기 위해 cors 라이브러리를 install한 다음 server.ts에 적용
+
+> ### 필수 기능
 
   <details>
     <summary>1. 로그인 </summary>
