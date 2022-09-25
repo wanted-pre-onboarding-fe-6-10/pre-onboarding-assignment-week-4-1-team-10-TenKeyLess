@@ -5,9 +5,11 @@ import useMutation from './../../hooks/useMutation';
 import { User } from 'pages/Accounts/Accounts';
 import UsersTable from './components/UsersTable';
 import { Pagination } from 'pages/Accounts/components/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
-  const accessToken = useRecoilValue(userInfoAtom);
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [users, setUsers] = useRecoilState(userListAtom);
   const [page, setPage] = useState(1);
   const [getUsers, { data, loading }] = useMutation<any>(`/users?_page=${page}&_limit=10`);
@@ -28,6 +30,13 @@ const Users = () => {
   useEffect(() => {
     if (data) {
       setUsers(data);
+    }
+  }, [data]);
+  useEffect(() => {
+    if (data === 'jwt expired') {
+      setUserInfo({ accessToken: '', email: '' });
+      alert('로그인 유효 기간이 만료됐습니다. 다시 로그인 해주세요.');
+      navigate('/');
     }
   }, [data]);
 

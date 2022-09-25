@@ -4,12 +4,25 @@ import { useParams } from 'react-router-dom';
 import { accountsStatus, brokers } from 'utils/constant';
 import { makeComma } from 'utils/utils';
 
+import { useRecoilState } from 'recoil';
+import { userInfoAtom } from './../../atoms';
+import { useNavigate } from 'react-router-dom';
+
 const AccountDetail = () => {
   const { accountId } = useParams();
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [getAccountInfo, { data, loading }] = useMutation(`/accounts/${accountId}?_expand=user`);
   useEffect(() => {
     getAccountInfo();
   }, []);
+  useEffect(() => {
+    if (data === 'jwt expired') {
+      setUserInfo({ accessToken: '', email: '' });
+      alert('로그인 유효 기간이 만료됐습니다. 다시 로그인 해주세요.');
+      navigate('/');
+    }
+  }, [data]);
   console.log(data);
   return (
     <div className="flex flex-col">
