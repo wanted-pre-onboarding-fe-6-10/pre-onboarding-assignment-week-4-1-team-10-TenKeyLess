@@ -23,7 +23,7 @@ const Router = () => {
       navigate('/');
     }
   }, [location]);
-  console.log(userInfo);
+
   return (
     <div>
       {location.pathname === '/' ? null : (

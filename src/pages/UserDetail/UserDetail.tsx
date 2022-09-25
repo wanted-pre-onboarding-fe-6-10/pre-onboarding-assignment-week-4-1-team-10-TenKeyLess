@@ -29,7 +29,7 @@ const UserDetail = () => {
       navigate('/');
     }
   }, [data]);
-  console.log(user, data, userSetting);
+
   return (
     <div className="px-32 pb-16 w-full bg-gray-100">
       {loading || userSettingLoading ? (

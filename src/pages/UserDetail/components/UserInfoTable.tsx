@@ -43,7 +43,7 @@ const UserInfoTable = ({ user, userSetting, dataLength }: UserProps) => {
   useEffect(() => {
     getUsers();
   }, []);
-  console.log(user);
+
   return (
     <div className="flex flex-col">
       {loading ? (

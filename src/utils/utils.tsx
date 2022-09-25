@@ -14,8 +14,6 @@ export const maskingAccountNumber = (number: string) => {
 };
 
 export const maskingPhoneNumber = (number: string) => {
-  console.log(number);
-  console.log(typeof number);
   let originNumber = number.split('');
   originNumber.forEach((n, i) => {
     let tmp = 6;
