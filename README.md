@@ -4,6 +4,7 @@
 
 ```
 git clone https://github.com/wanted-pre-onboarding-fe-6-10/pre-onboarding-assignment-week-4-1-team-10-TenKeyLess.git
+cd pre-onboarding-assignment-week-4-1-team-10-TenKeyLess
 
 - json server 시작(json server의 _expand 속성을 활용하기 위해 server 파일 일부 수정으로 해당 폴더에서 json server 구동 필요)
 cd server
