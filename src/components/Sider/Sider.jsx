@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
+import { useNavigate } from 'react-router-dom';
 
 function getItem(label, key) {
   return {
@@ -9,14 +10,25 @@ function getItem(label, key) {
   };
 }
 
-const items = [getItem('계좌목록', '1'), getItem('사용자', '2'), getItem('로그아웃', '3')];
+const items = [
+  getItem('계좌목록', 'account_list'),
+  getItem('사용자', 'users_list'),
+  getItem('로그아웃', '3'),
+];
 
 const Sider = () => {
+  const [current, setCurrent] = useState('account_list');
+  const navigate = useNavigate();
+
+  const onMovePage = e => {
+    setCurrent(e.key);
+    navigate(`/${e.key}/page=1/sort=user_id/filter=asc`);
+  };
   return (
     <div className="w-[256px] mr-8">
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        onClick={onMovePage}
+        defaultSelectedKeys={[current]}
         mode="inline"
         theme="light"
         items={items}

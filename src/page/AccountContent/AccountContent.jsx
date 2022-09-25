@@ -8,7 +8,7 @@ const AccountContent = () => {
   return (
     <>
       <Header />
-      <div className="w-[1440px] flex  p-10 my-0 mx-auto">
+      <div className="w-[1500px] flex  p-10 my-0 mx-auto ">
         <Sider />
         <AccountList />
       </div>

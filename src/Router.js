@@ -9,8 +9,14 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/account_list" element={<AccountContent />} />
-        <Route path="/users_list" element={<UserContent />} />
+        <Route
+          path="/account_list/page=:pageNum/sort=:sortTag/filter=:filterTag"
+          element={<AccountContent />}
+        />
+        <Route
+          path="/users_list/page=:pageNum/sort=:sortTag/filter=:filterTag"
+          element={<UserContent />}
+        />
       </Routes>
     </BrowserRouter>
   );
